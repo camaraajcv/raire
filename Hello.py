@@ -35,7 +35,7 @@ st.markdown("<h2 style='text-align: center; font-size: 1.2em;'>SUBDIRETORIA DE P
 st.markdown("<h3 style='text-align: center; font-size: 1em; text-decoration: underline;'>PP1 - DIVISÃO DE DESCONTOS</h3>", unsafe_allow_html=True)
 
 # Texto explicativo
-st.write("Desconto Externo Civil - Extração dados PDF SIAPE para SIAFI")
+st.write("Desconto Externo Militar - Extração dados PDF SIGPES para SIAFI")
 
 def remove_newlines(text):
     # Expressão regular para lidar com diferentes formas de nova linha
