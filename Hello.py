@@ -351,7 +351,7 @@ def exportar_xml(df_final, numero_ne, numero_sb,ano_empenho, cpf_responsavel, da
 # Função auxiliar para criar um link de download
 
 # Solicitar ao usuário o upload do arquivo PDF
-uploaded_file = st.file_uploader("Faça o UPLOAD do arquivo PDF do SIAPE gerado na transação GRCOCGRECO", type="pdf")
+uploaded_file = st.file_uploader("Faça o UPLOAD do arquivo PDF do gerado pela PP1-4 no PAG, type="pdf")
 
 # Obter o conteúdo do arquivo PDF
 if uploaded_file:
