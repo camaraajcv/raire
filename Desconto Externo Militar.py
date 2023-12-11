@@ -8,7 +8,7 @@ import os
 from datetime import datetime
 # Adiciona um título à barra lateral
 st.sidebar.title("Descontos Externos")
-
+st.sidebar.header("Desconto Externo Militar")
 # Adiciona um link para o outro aplicativo Streamlit
 link_militar = "[Militar](/workspaces/streamlit-example/streamlit_app_mil.py)"
 link_civil = "[Civil](/workspaces/streamlit-example/streamlit_app.py)"
