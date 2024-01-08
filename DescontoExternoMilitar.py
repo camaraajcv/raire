@@ -49,7 +49,7 @@ if uploaded_file is not None:
     # Inicializa listas para armazenar os dados
     cx_acantus = []
     descricao = []
-
+    texto_extraido = []
     # Lê o arquivo PDF em blocos
     with fitz.open(temp_file.name) as pdf_doc:
         num_paginas = pdf_doc.page_count
@@ -69,3 +69,10 @@ if uploaded_file is not None:
     # Exibe o DataFrame
     st.write("DataFrame gerado a partir dos dados extraídos:")
     st.write(df)
+     # Adiciona o texto da página à lista
+    texto_extraido.append(texto_pagina)
+
+    # Concatena todo o texto em uma única linha e exibe
+    texto_completo = ' '.join(texto_extraido)
+    st.write("Todo o texto extraído do PDF em uma única linha:")
+    st.write(texto_completo)
