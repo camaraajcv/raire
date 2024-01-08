@@ -36,3 +36,27 @@ st.markdown("<h3 style='text-align: center; font-size: 1em; text-decoration: und
 
 # Texto explicativo
 st.write("Desconto Externo Militar - Extração dados PDF SIGPES para SIAFI")
+
+# Adiciona um botão para fazer upload do arquivo PDF
+uploaded_file = st.file_uploader("Faça o upload do arquivo PDF", type="pdf")
+
+# Verifica se um arquivo foi carregado
+if uploaded_file is not None:
+    # Lê o arquivo PDF e extrai o texto
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(uploaded_file.read())
+
+    with fitz.open(temp_file.name) as pdf_doc:
+        num_paginas = pdf_doc.page_count
+        texto_pdf = ""
+        for pagina_num in range(num_paginas):
+            pagina = pdf_doc[pagina_num]
+            texto_pdf += pagina.get_text()
+
+    # Converte o texto extraído em um DataFrame
+    linhas = re.split('\n|\r', texto_pdf)
+    df = pd.DataFrame([linha.split() for linha in linhas], columns=["Coluna1", "Coluna2", "Coluna3"])  # Substitua pelas suas colunas
+
+    # Exibe o DataFrame
+    st.write("DataFrame gerado a partir do PDF:")
+    st.write(df)
