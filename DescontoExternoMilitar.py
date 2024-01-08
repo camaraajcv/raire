@@ -63,11 +63,13 @@ if uploaded_file is not None:
             # Adiciona o texto da página à lista
             texto_extraido.append(texto_pagina)
 
-            # Encontra o padrão "H01" e extrai os próximos 3 caracteres
-            indice_h01 = texto_pagina.find("H01")
-            if indice_h01 != -1:
-                cx_acantus.append(texto_pagina[indice_h01:indice_h01+3])
-                descricao.append(texto_pagina[indice_h01+3:indice_h01+37])
+            # Encontra os padrões de três caracteres que começam com uma letra
+            matches = re.findall(r'([A-Z]{1}[0-9A-Z]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n', texto_pagina)
+            
+            # Adiciona os dados aos respectivos listas
+            for match in matches:
+                cx_acantus.append(match[0])
+                descricao.append(match[1])
 
     # Concatena todo o texto em uma única linha e exibe
     texto_completo = ' '.join(texto_extraido)
@@ -80,4 +82,3 @@ if uploaded_file is not None:
     # Exibe o DataFrame
     st.write("DataFrame gerado a partir dos dados extraídos:")
     st.write(df)
-  
