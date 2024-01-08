@@ -47,6 +47,13 @@ if uploaded_file is not None:
     # Inicializa uma lista para armazenar os dados extraídos
     dados_extraidos = []
 
+    # Inicializa listas para armazenar os dados específicos
+    cx_acantus = []
+    outros_elementos = []
+
+    # Inicializa a variável para indicar se "H01" foi encontrado
+    h01_encontrado = False
+
     # Lê o arquivo PDF em blocos
     with fitz.open(temp_file.name) as pdf_doc:
         num_paginas = pdf_doc.page_count
@@ -57,6 +64,21 @@ if uploaded_file is not None:
             # Adiciona o texto da página à lista
             dados_extraidos.append(texto_pagina)
 
+            # Se "H01" foi encontrado, busca os demais padrões de 3 caracteres que atendem à condição
+            if h01_encontrado:
+                matches_tres_caracteres = re.findall(r'\b([A-Z][0-9A-Z]{2}[0-9A-Z])\b', texto_pagina)
+
+                # Filtra para garantir que tenhamos 3 dígitos, com o primeiro sendo uma letra
+                matches_tres_caracteres = [match for match in matches_tres_caracteres if re.match(r'^[A-Z][0-9A-Z]{2}$', match)]
+
+                # Separa os dados em "CX ACANTUS" e "Outros Elementos"
+                cx_acantus.extend(["H01"] + matches_tres_caracteres)
+                outros_elementos.extend(matches_tres_caracteres)
+
+            # Verifica se "H01" foi encontrado na linha
+            if re.search(r'\bH01\b', texto_pagina):
+                h01_encontrado = True
+
     # Concatena todo o texto em uma única linha
     dados_em_linha = ' '.join(dados_extraidos)
 
@@ -64,9 +86,14 @@ if uploaded_file is not None:
     st.write("Todos os dados extraídos do PDF em uma única linha:")
     st.write(dados_em_linha)
 
-    # Cria um DataFrame com os dados extraídos
-    df = pd.DataFrame({"Dados Extraídos": [dados_em_linha]})
+    # Cria DataFrames com os dados extraídos
+    df_cx_acantus = pd.DataFrame({"CX ACANTUS": cx_acantus})
+    df_outros_elementos = pd.DataFrame({"Outros Elementos": outros_elementos})
 
-    # Exibe o DataFrame
-    st.write("DataFrame gerado a partir dos dados extraídos:")
-    st.write(df)
+    # Exibe os DataFrames
+    st.write("DataFrame 'CX ACANTUS' gerado a partir dos dados extraídos:")
+    st.write(df_cx_acantus)
+
+    st.write("DataFrame 'Outros Elementos' gerado a partir dos dados extraídos:")
+    st.write(df_outros_elementos)
+
