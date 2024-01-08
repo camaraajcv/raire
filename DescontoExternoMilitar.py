@@ -53,10 +53,6 @@ if uploaded_file is not None:
             pagina = pdf_doc[pagina_num]
             texto_pdf += pagina.get_text()
 
-    # Converte o texto extraído em um DataFrame
-    linhas = re.split('\n|\r', texto_pdf)
-    df = pd.DataFrame([linha.split() for linha in linhas], columns=["Coluna1", "Coluna2", "Coluna3"])  # Substitua pelas suas colunas
-
-    # Exibe o DataFrame
-    st.write("DataFrame gerado a partir do PDF:")
-    st.write(df)
+    # Exibe o texto extraído
+    st.write("Texto extraído do PDF:")
+    st.text(texto_pdf)
