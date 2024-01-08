@@ -40,14 +40,14 @@ st.write("Desconto Externo Militar - Extração dados PDF SIGPES para SIAFI")
 # Adiciona um botão para fazer upload do arquivo PDF
 uploaded_file = st.file_uploader("Faça o upload do arquivo PDF", type="pdf")
 
-# Adiciona um botão para fazer upload do arquivo PDF
-uploaded_file = st.file_uploader("Faça o upload do arquivo PDF", type="pdf")
-
 # Verifica se um arquivo foi carregado
 if uploaded_file is not None:
     # Lê o arquivo PDF e extrai o texto em blocos
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(uploaded_file.read())
+
+    # Inicializa uma lista para armazenar o texto extraído
+    texto_extraido = []
 
     # Inicializa uma lista para armazenar os dados da coluna "CX ACANTUS"
     cx_acantus = []
@@ -59,18 +59,24 @@ if uploaded_file is not None:
             pagina = pdf_doc[pagina_num]
             texto_pagina = pagina.get_text()
 
-            # Divide o texto em linhas e procura pelos padrões desejados
-            linhas = texto_pagina.split('\n')
-            for linha in linhas:
-                # Verifica se a linha contém "H01" e extrai os padrões de 3 caracteres
-                if "H01" in linha:
-                    # Encontrando padrões de 3 caracteres na linha
-                    matches_tres_caracteres = [match.group(0) for match in re.finditer(r'\b([A-Z]{1}[0-9A-Z]{2})\b', linha)]
-                    
-                    # Filtra para garantir que tenhamos 3 dígitos, com o primeiro sendo uma letra
-                    matches_tres_caracteres = [match for match in matches_tres_caracteres if re.match(r'^[A-Z][0-9A-Z]{2}$', match)]
+            # Adiciona o texto da página à lista
+            texto_extraido.append(texto_pagina)
 
-                    cx_acantus.extend(["H01"] + matches_tres_caracteres)
+            # Encontra a primeira ocorrência de "H01" na linha
+            match_h01 = re.search(r'\bH01\b', texto_pagina)
+            if match_h01:
+                # Extrai os demais padrões de 3 caracteres que atendem à condição
+                matches_tres_caracteres = re.findall(r'\b([A-Z]{1}[0-9A-Z]{2}[0-9A-Z])\b', texto_pagina[match_h01.start():])
+
+                # Filtra para garantir que tenhamos 3 dígitos, com o primeiro sendo uma letra
+                matches_tres_caracteres = [match for match in matches_tres_caracteres if re.match(r'^[A-Z][0-9A-Z]{2}$', match)]
+
+                cx_acantus.extend(["H01"] + matches_tres_caracteres)
+
+    # Concatena todo o texto em uma única linha e exibe
+    texto_completo = ' '.join(texto_extraido)
+    st.write("Todo o texto extraído do PDF em uma única linha:")
+    st.write(texto_completo)
 
     # Cria um DataFrame com os dados extraídos
     df = pd.DataFrame({"CX ACANTUS": cx_acantus})
