@@ -49,9 +49,8 @@ if uploaded_file is not None:
     # Inicializa uma lista para armazenar o texto extraído
     texto_extraido = []
 
-    # Inicializa listas para armazenar os dados do DataFrame
+    # Inicializa uma lista para armazenar os dados da coluna "CX ACANTUS"
     cx_acantus = []
-    descricao = []
 
     # Flag para indicar se a primeira entrada "H01" foi encontrada
     h01_encontrada = False
@@ -69,15 +68,13 @@ if uploaded_file is not None:
             # Encontra os padrões de três caracteres que começam com uma letra
             matches = re.findall(r'([A-Z]{1}[0-9A-Z]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n', texto_pagina)
 
-            # Adiciona os dados aos respectivos listas
+            # Adiciona os dados à lista da coluna "CX ACANTUS"
             for match in matches:
                 if match[0] == "H01" and not h01_encontrada:
-                    cx_acantus.insert(0, match[0])
-                    descricao.insert(0, match[2])
-                    h01_encontrada = True
-                else:
                     cx_acantus.append(match[0])
-                    descricao.append(match[2])
+                    h01_encontrada = True
+                elif len(match[0]) == 3:  # Verifica se o padrão tem 3 caracteres
+                    cx_acantus.append(match[0])
 
     # Concatena todo o texto em uma única linha e exibe
     texto_completo = ' '.join(texto_extraido)
@@ -85,7 +82,7 @@ if uploaded_file is not None:
     st.write(texto_completo)
 
     # Cria um DataFrame com os dados extraídos
-    df = pd.DataFrame({"CX ACANTUS": cx_acantus, "Descrição": descricao})
+    df = pd.DataFrame({"CX ACANTUS": cx_acantus})
 
     # Exibe o DataFrame
     st.write("DataFrame gerado a partir dos dados extraídos:")
