@@ -37,7 +37,6 @@ st.markdown("<h3 style='text-align: center; font-size: 1em; text-decoration: und
 # Texto explicativo
 st.write("Desconto Externo Militar - Extração dados PDF SIGPES para SIAFI")
 
-
 # Adiciona um botão para fazer upload do arquivo PDF
 uploaded_file = st.file_uploader("Faça o upload do arquivo PDF", type="pdf")
 
@@ -55,12 +54,14 @@ if uploaded_file is not None:
             texto_pdf += pagina.get_text()
 
     # Define padrões de regex para extrair informações específicas
-    padrao_dados = re.compile(r'([A-Z]{1}[0-9]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n', re.DOTALL)
+    padrao_dados = re.compile(r'(\d{3}[A-Z0-9]+)\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
 
     # Extrai as informações usando regex
     matches = padrao_dados.findall(texto_pdf)
 
-    # Exibe as informações extraídas
-    st.write("Resultados:")
-    for match in matches:
-        st.write(f"Padrão: {match[0]}, Valor: {match[1]}, Descrição: {match[2]}")
+    # Cria um DataFrame com as informações extraídas
+    df = pd.DataFrame(matches, columns=["CX ACANTUS", "Valor", "Descrição"])
+
+    # Exibe o DataFrame
+    st.write("DataFrame gerado a partir dos dados extraídos:")
+    st.write(df)
