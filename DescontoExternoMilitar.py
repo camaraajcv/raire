@@ -46,9 +46,8 @@ if uploaded_file is not None:
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(uploaded_file.read())
 
-    # Define padrões de regex para extrair informações específicas
-    padrao_inicio = re.compile(r'H01\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
-    padrao_acantus = re.compile(r'([A-Z]{1}[0-9A-Z]+)\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
+    # Define um padrão de regex para extrair padrões de três caracteres que começam com uma letra
+    padrao_acantus = re.compile(r'([A-Z]{1}[0-9A-Z]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
 
     # Inicializa uma lista para armazenar os resultados
     resultados = []
@@ -60,16 +59,10 @@ if uploaded_file is not None:
             pagina = pdf_doc[pagina_num]
             texto_pagina = pagina.get_text()
 
-            # Encontrar o padrão "H01" para iniciar a busca
-            inicio_match = padrao_inicio.search(texto_pagina)
-            if inicio_match:
-                valor_inicial, descricao_inicial = inicio_match.groups()
-                resultados.append(("H01", valor_inicial, descricao_inicial))
-                
-                # Extrair padrões subsequentes a partir de "H01"
-                matches = padrao_acantus.findall(texto_pagina[inicio_match.end():])
-                resultados.extend(matches)
+            # Extrai as informações usando regex e adiciona à lista de resultados
+            matches = padrao_acantus.findall(texto_pagina)
+            resultados.extend(matches)
 
-    # Exibe os resultados
-    for match in resultados:
-        st.write(f"Padrão: {match[0]}, Valor: {match[1]}, Descrição: {match[2]}")
+    # Exibe todos os resultados em uma única linha
+    st.write("Todos os dados extraídos em uma única linha:")
+    st.write(resultados)
