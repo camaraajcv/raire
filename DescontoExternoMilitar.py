@@ -46,11 +46,8 @@ if uploaded_file is not None:
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(uploaded_file.read())
 
-    # Define um padrão de regex para extrair padrões de três caracteres que começam com uma letra
-    padrao_acantus = re.compile(r'([A-Z]{1}[0-9A-Z]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
-
-    # Inicializa uma lista para armazenar os resultados
-    resultados = []
+    # Inicializa uma lista para armazenar o texto extraído
+    texto_extraido = []
 
     # Lê o arquivo PDF em blocos
     with fitz.open(temp_file.name) as pdf_doc:
@@ -59,10 +56,10 @@ if uploaded_file is not None:
             pagina = pdf_doc[pagina_num]
             texto_pagina = pagina.get_text()
 
-            # Extrai as informações usando regex e adiciona à lista de resultados
-            matches = padrao_acantus.findall(texto_pagina)
-            resultados.extend(matches)
+            # Adiciona o texto da página à lista
+            texto_extraido.append(texto_pagina)
 
-    # Exibe todos os resultados em uma única linha
-    st.write("Todos os dados extraídos em uma única linha:")
-    st.write(resultados)
+    # Concatena todo o texto em uma única linha e exibe
+    texto_completo = ' '.join(texto_extraido)
+    st.write("Todo o texto extraído do PDF em uma única linha:")
+    st.write(texto_completo)
