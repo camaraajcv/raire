@@ -73,7 +73,7 @@ if uploaded_file is not None:
                 if match[0] == "H01" and not h01_encontrada:
                     cx_acantus.append(match[0])
                     h01_encontrada = True
-                elif len(match[0]) == 3:  # Verifica se o padrão tem 3 caracteres
+                elif len(match[0]) == 3 and match[0] not in cx_acantus:  # Verifica se o padrão tem 3 caracteres e não foi adicionado antes
                     cx_acantus.append(match[0])
 
     # Concatena todo o texto em uma única linha e exibe
