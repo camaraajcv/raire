@@ -47,7 +47,7 @@ if uploaded_file is not None:
         temp_file.write(uploaded_file.read())
 
     # Define padrões de regex para extrair informações específicas
-    padrao_dados = re.compile(r'(\d{3}[A-Z0-9]+)\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
+    padrao_acantus = re.compile(r'([A-Z]{1}[0-9]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
 
     # Inicializa uma lista para armazenar os resultados
     resultados = []
@@ -60,7 +60,7 @@ if uploaded_file is not None:
             texto_pagina = pagina.get_text()
             
             # Extrai as informações usando regex e adiciona à lista de resultados
-            matches = padrao_dados.findall(texto_pagina)
+            matches = padrao_acantus.findall(texto_pagina)
             resultados.extend(matches)
 
     # Cria um DataFrame com as informações extraídas
@@ -69,4 +69,3 @@ if uploaded_file is not None:
     # Exibe o DataFrame
     st.write("DataFrame gerado a partir dos dados extraídos:")
     st.write(df)
-
