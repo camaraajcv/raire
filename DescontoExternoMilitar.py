@@ -53,6 +53,9 @@ if uploaded_file is not None:
     cx_acantus = []
     descricao = []
 
+    # Flag para indicar se a primeira entrada "H01" foi encontrada
+    h01_encontrada = False
+
     # Lê o arquivo PDF em blocos
     with fitz.open(temp_file.name) as pdf_doc:
         num_paginas = pdf_doc.page_count
@@ -68,8 +71,13 @@ if uploaded_file is not None:
 
             # Adiciona os dados aos respectivos listas
             for match in matches:
-                cx_acantus.append(match[0])
-                descricao.append(match[2])
+                if match[0] == "H01" and not h01_encontrada:
+                    cx_acantus.insert(0, match[0])
+                    descricao.insert(0, match[2])
+                    h01_encontrada = True
+                else:
+                    cx_acantus.append(match[0])
+                    descricao.append(match[2])
 
     # Concatena todo o texto em uma única linha e exibe
     texto_completo = ' '.join(texto_extraido)
