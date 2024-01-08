@@ -47,7 +47,7 @@ if uploaded_file is not None:
         temp_file.write(uploaded_file.read())
 
     # Define padrões de regex para extrair informações específicas
-    padrao_acantus = re.compile(r'([A-Z]{1}[0-9]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
+    padrao_acantus = re.compile(r'([A-Z]{1}[0-9A-Z]+)\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
 
     # Inicializa uma lista para armazenar os resultados
     resultados = []
@@ -65,6 +65,9 @@ if uploaded_file is not None:
 
     # Cria um DataFrame com as informações extraídas
     df = pd.DataFrame(resultados, columns=["CX ACANTUS", "Valor", "Descrição"])
+
+    # Remove linhas em que "CX ACANTUS" é vazio
+    df = df[df["CX ACANTUS"] != ""]
 
     # Exibe o DataFrame
     st.write("DataFrame gerado a partir dos dados extraídos:")
