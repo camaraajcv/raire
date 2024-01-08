@@ -53,6 +53,17 @@ if uploaded_file is not None:
             pagina = pdf_doc[pagina_num]
             texto_pdf += pagina.get_text()
 
-    # Exibe o texto extraído
-    st.write("Texto extraído do PDF:")
-    st.text(texto_pdf)
+    # Define padrões de regex para extrair informações específicas
+    padrao_codigo_despesa = re.compile(r'CÓD\. DO ELEMENTO DESPESA:(.*?)\n', re.DOTALL)
+    padrao_descricao = re.compile(r'DESCR[IAÇÃO]+:(.*?)\n', re.DOTALL)
+
+    # Extrai as informações usando regex
+    codigos_despesa = padrao_codigo_despesa.findall(texto_pdf)
+    descricoes = padrao_descricao.findall(texto_pdf)
+
+    # Exibe as informações extraídas
+    st.write("CÓD. DO ELEMENTO DESPESA:")
+    st.write(codigos_despesa)
+
+    st.write("DESCRIÇÃO:")
+    st.write(descricoes)
