@@ -54,16 +54,12 @@ if uploaded_file is not None:
             texto_pdf += pagina.get_text()
 
     # Define padrões de regex para extrair informações específicas
-    padrao_codigo_despesa = re.compile(r'CÓD\. DO ELEMENTO DESPESA:(.*?)\n', re.DOTALL)
-    padrao_descricao = re.compile(r'DESCR[IAÇÃO]+:(.*?)\n', re.DOTALL)
+    padrao_dados = re.compile(r'([A-Z]{1}[0-9]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n', re.DOTALL)
 
     # Extrai as informações usando regex
-    codigos_despesa = padrao_codigo_despesa.findall(texto_pdf)
-    descricoes = padrao_descricao.findall(texto_pdf)
+    matches = padrao_dados.findall(texto_pdf)
 
     # Exibe as informações extraídas
-    st.write("CÓD. DO ELEMENTO DESPESA:")
-    st.write(codigos_despesa)
-
-    st.write("DESCRIÇÃO:")
-    st.write(descricoes)
+    st.write("Resultados:")
+    for match in matches:
+        st.write(f"Padrão: {match[0]}, Valor: {match[1]}, Descrição: {match[2]}")
