@@ -65,8 +65,8 @@ if uploaded_file is not None:
             # Encontra a primeira ocorrência de "H01" na linha
             match_h01 = re.search(r'\bH01\b', texto_pagina)
             if match_h01:
-                # Extrai os demais padrões de 3 caracteres da mesma linha
-                matches_tres_caracteres = re.findall(r'\b([A-Z]{1}[0-9A-Z]{2})\b', texto_pagina[match_h01.start():])
+                # Extrai os demais padrões de 3 caracteres que atendem à condição
+                matches_tres_caracteres = re.findall(r'\b([A-Z]{1}[0-9A-Z]{2}[0-9A-Z])\b', texto_pagina[match_h01.start():])
                 cx_acantus.extend(["H01"] + matches_tres_caracteres)
 
     # Concatena todo o texto em uma única linha e exibe
