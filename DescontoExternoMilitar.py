@@ -42,26 +42,31 @@ uploaded_file = st.file_uploader("Faça o upload do arquivo PDF", type="pdf")
 
 # Verifica se um arquivo foi carregado
 if uploaded_file is not None:
-    # Lê o arquivo PDF e extrai o texto
+    # Lê o arquivo PDF e extrai o texto em blocos
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(uploaded_file.read())
-
-    with fitz.open(temp_file.name) as pdf_doc:
-        num_paginas = pdf_doc.page_count
-        texto_pdf = ""
-        for pagina_num in range(num_paginas):
-            pagina = pdf_doc[pagina_num]
-            texto_pdf += pagina.get_text()
 
     # Define padrões de regex para extrair informações específicas
     padrao_dados = re.compile(r'(\d{3}[A-Z0-9]+)\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n')
 
-    # Extrai as informações usando regex
-    matches = padrao_dados.findall(texto_pdf)
+    # Inicializa uma lista para armazenar os resultados
+    resultados = []
+
+    # Lê o arquivo PDF em blocos
+    with fitz.open(temp_file.name) as pdf_doc:
+        num_paginas = pdf_doc.page_count
+        for pagina_num in range(num_paginas):
+            pagina = pdf_doc[pagina_num]
+            texto_pagina = pagina.get_text()
+            
+            # Extrai as informações usando regex e adiciona à lista de resultados
+            matches = padrao_dados.findall(texto_pagina)
+            resultados.extend(matches)
 
     # Cria um DataFrame com as informações extraídas
-    df = pd.DataFrame(matches, columns=["CX ACANTUS", "Valor", "Descrição"])
+    df = pd.DataFrame(resultados, columns=["CX ACANTUS", "Valor", "Descrição"])
 
     # Exibe o DataFrame
     st.write("DataFrame gerado a partir dos dados extraídos:")
     st.write(df)
+
