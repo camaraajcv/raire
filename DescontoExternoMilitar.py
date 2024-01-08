@@ -66,8 +66,8 @@ if uploaded_file is not None:
             # Verifica se "H01" foi encontrado na linha
             if re.search(r'\bH01\b', texto_pagina):
                 h01_encontrado = True
-                cx_acantus.append("H01")
-            elif h01_encontrado:
+
+            if h01_encontrado:
                 # Busca todos os padrões de 3 caracteres que atendem à condição
                 matches_tres_caracteres = re.findall(r'\b([A-Z][0-9A-Z]{2}[0-9A-Z])\b', texto_pagina)
 
