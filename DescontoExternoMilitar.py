@@ -52,9 +52,6 @@ if uploaded_file is not None:
     # Inicializa uma lista para armazenar os dados da coluna "CX ACANTUS"
     cx_acantus = []
 
-    # Flag para indicar se a primeira entrada "H01" foi encontrada
-    h01_encontrada = False
-
     # Lê o arquivo PDF em blocos
     with fitz.open(temp_file.name) as pdf_doc:
         num_paginas = pdf_doc.page_count
@@ -65,16 +62,12 @@ if uploaded_file is not None:
             # Adiciona o texto da página à lista
             texto_extraido.append(texto_pagina)
 
-            # Encontra os padrões de três caracteres que começam com uma letra
-            matches = re.findall(r'([A-Z]{1}[0-9A-Z]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n', texto_pagina)
-
-            # Adiciona os dados à lista da coluna "CX ACANTUS"
-            for match in matches:
-                if match[0] == "H01" and not h01_encontrada:
-                    cx_acantus.append(match[0])
-                    h01_encontrada = True
-                elif len(match[0]) == 3 and match[0] not in cx_acantus:  # Verifica se o padrão tem 3 caracteres e não foi adicionado antes
-                    cx_acantus.append(match[0])
+            # Encontra a primeira ocorrência de "H01" na linha
+            match_h01 = re.search(r'\bH01\b', texto_pagina)
+            if match_h01:
+                # Extrai os demais padrões de 3 caracteres da mesma linha
+                matches_tres_caracteres = re.findall(r'\b([A-Z]{1}[0-9A-Z]{2})\b', texto_pagina[match_h01.start():])
+                cx_acantus.extend(["H01"] + matches_tres_caracteres)
 
     # Concatena todo o texto em uma única linha e exibe
     texto_completo = ' '.join(texto_extraido)
