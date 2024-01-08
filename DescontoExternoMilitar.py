@@ -65,11 +65,11 @@ if uploaded_file is not None:
 
             # Encontra os padrões de três caracteres que começam com uma letra
             matches = re.findall(r'([A-Z]{1}[0-9A-Z]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n', texto_pagina)
-            
+
             # Adiciona os dados aos respectivos listas
             for match in matches:
                 cx_acantus.append(match[0])
-                descricao.append(match[1])
+                descricao.append(match[2])
 
     # Concatena todo o texto em uma única linha e exibe
     texto_completo = ' '.join(texto_extraido)
