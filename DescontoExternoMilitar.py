@@ -36,3 +36,31 @@ st.markdown("<h3 style='text-align: center; font-size: 1em; text-decoration: und
 
 # Texto explicativo
 st.write("Desconto Externo Militar - Extração dados PDF SIGPES para SIAFI")
+
+
+# Adiciona um botão para fazer upload do arquivo PDF
+uploaded_file = st.file_uploader("Faça o upload do arquivo PDF", type="pdf")
+
+# Verifica se um arquivo foi carregado
+if uploaded_file is not None:
+    # Lê o arquivo PDF e extrai o texto
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(uploaded_file.read())
+
+    with fitz.open(temp_file.name) as pdf_doc:
+        num_paginas = pdf_doc.page_count
+        texto_pdf = ""
+        for pagina_num in range(num_paginas):
+            pagina = pdf_doc[pagina_num]
+            texto_pdf += pagina.get_text()
+
+    # Define padrões de regex para extrair informações específicas
+    padrao_dados = re.compile(r'([A-Z]{1}[0-9]{2})\s+([0-9,.]+)\s+([A-Z0-9\s-]+)\n', re.DOTALL)
+
+    # Extrai as informações usando regex
+    matches = padrao_dados.findall(texto_pdf)
+
+    # Exibe as informações extraídas
+    st.write("Resultados:")
+    for match in matches:
+        st.write(f"Padrão: {match[0]}, Valor: {match[1]}, Descrição: {match[2]}")
