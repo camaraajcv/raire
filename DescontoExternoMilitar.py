@@ -50,29 +50,25 @@ if uploaded_file is not None:
     cx_acantus = []
     descricao = []
     texto_extraido = []
-    # Lê o arquivo PDF em blocos
+        # Lê o arquivo PDF em blocos
     with fitz.open(temp_file.name) as pdf_doc:
         num_paginas = pdf_doc.page_count
         for pagina_num in range(num_paginas):
             pagina = pdf_doc[pagina_num]
             texto_pagina = pagina.get_text()
 
-            # Encontra o padrão "H01" e extrai os próximos 3 caracteres
-            indice_h01 = texto_pagina.find("H01")
-            if indice_h01 != -1:
-                cx_acantus.append(texto_pagina[indice_h01:indice_h01+3])
-                descricao.append(texto_pagina[indice_h01+3:indice_h01+37])
+            # Adiciona o texto da página à lista
+            texto_extraido.append(texto_pagina)
 
+    # Concatena todo o texto em uma única linha e exibe
+    texto_completo = ' '.join(texto_extraido)
+    st.write("Todo o texto extraído do PDF em uma única linha:")
+    st.write(texto_completo)
     # Cria um DataFrame com os dados extraídos
     df = pd.DataFrame({"CX ACANTUS": cx_acantus, "Descrição": descricao})
 
     # Exibe o DataFrame
     st.write("DataFrame gerado a partir dos dados extraídos:")
     st.write(df)
-     # Adiciona o texto da página à lista
-    texto_extraido.append(texto_pagina)
 
-    # Concatena todo o texto em uma única linha e exibe
-    texto_completo = ' '.join(texto_extraido)
-    st.write("Todo o texto extraído do PDF em uma única linha:")
-    st.write(texto_completo)
+  
