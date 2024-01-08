@@ -4,4 +4,4 @@ pandas
 pydeck
 streamlit
 PyMuPDF
-tabula
+tabula-py
