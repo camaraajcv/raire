@@ -248,3 +248,13 @@ if uploaded_file is not None:
 
     # Mostrando o fator de conversão
     st.success(f"Fator de Conversão para {selected_post}: {conversion_factor}")
+    # Seletor de datas
+start_date = st.date_input("Selecione a data de início:")
+end_date = st.date_input("Selecione a data de término:")
+
+# Botão para calcular a quantidade de dias
+if st.button("Calcular"):
+    # Calcula a diferença entre as datas
+    delta = end_date - start_date
+    # Exibe a quantidade de dias
+    st.write(f"A quantidade de dias entre {start_date.strftime('%d/%m/%Y')} e {end_date.strftime('%d/%m/%Y')} é: {delta.days} dias.")
