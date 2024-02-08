@@ -263,3 +263,16 @@ rr = pd.DataFrame(data)
 
 # Exibir o DataFrame
 rr
+
+from streamlit.components.v1 import components
+
+# Adicionando um componente personalizado para seleção de intervalo de tempo
+date_range = components.date_input(
+    label="Selecione o intervalo de tempo:",
+    key="date_range",
+    value=("2022-01-01", "2022-12-31"),  # Intervalo de tempo padrão
+    help="Selecione o intervalo de tempo desejado."
+)
+
+# Exibindo o intervalo de tempo selecionado
+st.write("Intervalo de tempo selecionado:", date_range)
