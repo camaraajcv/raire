@@ -267,12 +267,21 @@ rr
 from streamlit.components.v1 import components
 
 # Adicionando um componente personalizado para seleção de intervalo de tempo
-date_range = components.date_input(
-    label="Selecione o intervalo de tempo:",
-    key="date_range",
-    value=("2022-01-01", "2022-12-31"),  # Intervalo de tempo padrão
-    help="Selecione o intervalo de tempo desejado."
+start_date = st.date_input(
+    label="Selecione a data de início:",
+    min_value="2022-01-01",  # Data mínima permitida
+    max_value="2022-12-31",  # Data máxima permitida
+    value="2022-01-01",  # Data padrão
+    help="Selecione a data de início do intervalo desejado."
+)
+
+end_date = st.date_input(
+    label="Selecione a data de término:",
+    min_value="2022-01-01",  # Data mínima permitida
+    max_value="2022-12-31",  # Data máxima permitida
+    value="2022-12-31",  # Data padrão
+    help="Selecione a data de término do intervalo desejado."
 )
 
 # Exibindo o intervalo de tempo selecionado
-st.write("Intervalo de tempo selecionado:", date_range)
+st.write("Intervalo de tempo selecionado:", start_date, "a", end_date)
