@@ -258,3 +258,8 @@ if st.button("Calcular"):
     delta = end_date - start_date
     # Exibe a quantidade de dias
     st.write(f"A quantidade de dias entre {start_date.strftime('%d/%m/%Y')} e {end_date.strftime('%d/%m/%Y')} é: {delta.days} dias.")
+    # Converter o dicionário em um DataFrame
+rr = pd.DataFrame(data)
+
+# Exibir o DataFrame
+rr
