@@ -247,4 +247,4 @@ if uploaded_file is not None:
     conversion_factor = data[selected_country][selected_post]
 
     # Mostrando o fator de conversão
-    st.write(f"Fator de Conversão para {selected_post}: {conversion_factor}")
+    st.success(f"Fator de Conversão para {selected_post}: {conversion_factor}")
