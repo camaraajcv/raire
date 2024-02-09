@@ -147,31 +147,6 @@ data = {
     "Zimbábue": {"Harare": 64.80}
 }
 
-# Criando os seletor de país e posto
-selected_country = st.selectbox("Selecione o país", list(data.keys()))
-selected_post = st.selectbox("Selecione o posto", list(data[selected_country].keys()))
-
-# Obtendo o fator de conversão para o posto selecionado
-conversion_factor = data[selected_country][selected_post]
-
-# Mostrando o fator de conversão
-st.write(f"Fator de Conversão para {selected_post}: {conversion_factor}")
-
-# Título da página
-st.title("Calculadora de Dias")
-
-# Seletor de datas
-start_date = st.date_input("Selecione a data de início:")
-end_date = st.date_input("Selecione a data de término:")
-
-# Botão para calcular a quantidade de dias
-if st.button("Calcular"):
-    # Calcula a diferença entre as datas
-    delta = end_date - start_date
-    # Exibe a quantidade de dias
-    st.write(f"A quantidade de dias entre {start_date.strftime('%d/%m/%Y')} e {end_date.strftime('%d/%m/%Y')} é: {delta.days} dias.")
-
-# Dados da tabela
 tabela = {
     "Almirante-de-Esquadra, General-de-Exército e Tenente-Brigadeiro.": 100,
     "Vice-Almirante, General-de-divisão e Major-Brigadeiro.": 80,
@@ -188,10 +163,38 @@ tabela = {
     "Cabo e demais Praças.": 10
 }
 
-# Caixa de seleção para escolher o grau hierárquico
-grau_hierarquico = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
+def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
+    delta = end_date - start_date
+    dias = delta.days
+    if dias >= 30:
+        valor_raire = conversion_factor * tabela[grau_hierarquico]
+    else:
+        proporcao = dias / 30
+        valor_raire = conversion_factor * tabela[grau_hierarquico] * proporcao
+    return valor_raire
 
-# Exibindo o valor correspondente
-if grau_hierarquico:
-    valor = tabela[grau_hierarquico]
-    st.write(f"O valor correspondente ao grau hierárquico '{grau_hierarquico}' é: {valor}")
+# Cabeçalho do formulário
+with st.form("meu_formulario"):
+    st.write("## Calcule o RAIRE")
+
+    # Seletor de país e posto
+    selected_country = st.selectbox("Selecione o país", list(data.keys()))
+    selected_post = st.selectbox("Selecione o posto", list(data[selected_country].keys()))
+
+    # Obtendo o fator de conversão para o posto selecionado
+    conversion_factor = data[selected_country][selected_post]
+
+    # Seletor de datas
+    start_date = st.date_input("Selecione a data de início:")
+    end_date = st.date_input("Selecione a data de término:")
+
+    # Caixa de seleção para escolher o grau hierárquico
+    grau_hierarquico = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
+
+    # Botão para calcular o RAIRE
+    submitted = st.form_submit_button("Calcular RAIRE")
+
+# Mostrar o resultado
+if submitted:
+    valor_raire = calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor)
+    st.write(f"O RAIRE calculado é: ${valor_raire:.2f}")
