@@ -178,27 +178,27 @@ with st.form("meu_formulario"):
     st.write("## Calcule o RAIRE")
 
     # Seletor de país
-    selected_country = st.selectbox("Selecione o país", list(data.keys()), key="selected_country")
+    selected_country = st.selectbox("Selecione o país", list(data.keys()))
 
-    # Espaço vazio para o seletor de postos
-    selected_post_placeholder = st.empty()
-
-    # Atualiza o seletor de postos sempre que o país for alterado
     if selected_country:
+        # Espaço vazio para o seletor de postos
+        selected_post_placeholder = st.empty()
+
+        # Atualiza o seletor de postos
         selected_post_options = list(data[selected_country].keys())
         selected_post = selected_post_placeholder.selectbox("Selecione o posto", selected_post_options)
 
-    # Seletor de datas
-    start_date = st.date_input("Selecione a data de início:")
-    end_date = st.date_input("Selecione a data de término:")
+        # Seletor de datas
+        start_date = st.date_input("Selecione a data de início:")
+        end_date = st.date_input("Selecione a data de término:")
 
-    # Caixa de seleção para escolher o grau hierárquico
-    grau_hierarquico = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
+        # Caixa de seleção para escolher o grau hierárquico
+        grau_hierarquico = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
 
-    # Botão para calcular o RAIRE
-    submitted = st.form_submit_button("Calcular RAIRE")
+        # Botão para calcular o RAIRE
+        submitted = st.form_submit_button("Calcular RAIRE")
 
-# Mostrar o resultado
-if submitted:
-    valor_raire = calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor)
-    st.write(f"O RAIRE calculado é: ${valor_raire:.2f}")
+        # Mostrar o resultado
+        if submitted:
+            valor_raire = calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor)
+            st.write(f"O RAIRE calculado é: ${valor_raire:.2f}")
