@@ -165,19 +165,18 @@ data = {
 }
 
 tabela = {
-    "Almirante-de-Esquadra, General-de-Exército e Tenente-Brigadeiro.": 100,
-    "Vice-Almirante, General-de-divisão e Major-Brigadeiro.": 80,
-    "Contra-Almirante, General-de-Brigada e Brigadeiro.": 80,
-    "Capitão-de-Mar-e-Guerra e Coronel (Adido Militar, Adjunto de Adido Militar).": 70,
-    "Capitão-de-Mar-e-Guerra e Coronel (Presidente ou Chefe de Comissão ou Órgão Militar); Capitão-de-Fragata ou Tenente-Coronel (Adido Militar ou Adjunto de Adido Militar).": 60,
-    "Capitão-de-Mar-e-Guerra e Coronel.": 50,
-    "Capitão-de-Fragata e Tenente-Coronel.": 45,
-    "Capitão-de-Corveta e Major.": 40,
-    "Capitão-Tenente e Capitão.": 35,
-    "Oficiais Subalternos.": 30,
-    "Suboficial, Subtenente e Sargento (Auxiliar de Adido Militar).": 25,
-    "Suboficial, Subtenente, Sargento e Praças Especiais (Alunos de Órgão de formação de Oficiais da Ativa).": 20,
-    "Cabo e demais Praças.": 10
+    "Almirante-de-Esquadra, General-de-Exército e Tenente-Brigadeiro.": 150,
+    "Vice-Almirante, General-de-divisão e Major-Brigadeiro.": 100,
+    "Contra-Almirante, General-de-Brigada e Brigadeiro.": 100,
+    "Capitão-de-Mar-e-Guerra/ Coronel e Capitão-de-Fragata / Tenente-Coronel.(Adido Militar, Adjunto de Adido Militar).": 90,
+    "Capitão-de-Mar-e-Guerra e Coronel .": 80,
+    "Capitão-de-Fragata e Tenente-Coronel.": 80,
+    "Capitão-de-Corveta e Major.": 80,
+    "Capitão-Tenente e Capitão.": 80,
+    "Oficiais Subalternos.": 80,
+    "Suboficial, Subtenente e Sargento (Auxiliar de Adido Militar).": 70,
+    "Suboficial, Subtenente, Sargento e Praças Especiais (Alunos de Órgão de formação de Oficiais da Ativa).": 70,
+    "Cabo e demais Praças.": 70
 }
 
 def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
