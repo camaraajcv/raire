@@ -171,7 +171,8 @@ tabela = {
     "Cabo e demais Praças.": 70
 }
 
-def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
+# Função para calcular o valor da RAIRE
+def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor, numero_dependentes):
     delta = end_date - start_date
     dias = delta.days
     if dias >= 30:
@@ -179,6 +180,13 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
     else:
         proporcao = dias / 30
         valor_raire = conversion_factor * tabela[grau_hierarquico] * proporcao
+
+    # Aplicar acréscimo no valor final da RAIRE baseado no número de dependentes
+    if numero_dependentes == 2:
+        valor_raire *= 1.05  # 5% de acréscimo para 2 dependentes
+    elif numero_dependentes >= 3:
+        valor_raire *= 1.10  # 10% de acréscimo para 3 ou mais dependentes
+    
     return valor_raire
 
 # Lista de graus hierárquicos
@@ -208,17 +216,12 @@ if selected_country:
         # Inputs de data para data de ida e volta
         start_date = st.date_input("Selecione a data de início da Portaria:",format="DD/MM/YYYY",min_value=date(2024, 1, 1))
         end_date = st.date_input("Selecione a data de término da Portaria:",format="DD/MM/YYYY")
-    
-       
-        # Calcular a diferença de dias entre as datas
-        if start_date and end_date:
-            delta = end_date - start_date
-            difference_in_days = delta.days
-            if difference_in_days == 0:
-                st.error("As datas selecionadas são iguais.")
-            else:
-                st.warning(f"A diferença de dias entre as datas é: {difference_in_days}")
-            
+        
+        # Seletor para indicar se leva dependentes e quantos
+        numero_dependentes = st.select_slider("Número de dependentes:", options=[0, 1, 2, 3, 4, 5])
+
+        # Calcular a RAIRE se todas as informações forem fornecidas
+        if start_date and end_date and numero_dependentes is not None:
             # Seletor de grau hierárquico
             selected_rank = st.selectbox("Selecione seu grau hierárquico:", rank_options)
             if selected_rank:
@@ -227,11 +230,7 @@ if selected_country:
                 st.warning(f"O valor do grau hierárquico selecionado é: {selected_rank_value}")
                 
                 # Calcular o valor do RAIRE
-                if difference_in_days >= 30:
-                    valor_raire = conversion_factor * selected_rank_value
-                else:
-                    proporcao = difference_in_days / 30
-                    valor_raire = conversion_factor * selected_rank_value * proporcao
+                valor_raire = calcular_raire(start_date, end_date, selected_rank, conversion_factor, numero_dependentes)
 
                 # Formatar o valor do RAIRE para moeda em dólar
                 valor_raire_usd = "${:,.2f}".format(valor_raire)
