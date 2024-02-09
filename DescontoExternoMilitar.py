@@ -177,7 +177,7 @@ def formatar_numero(numero):
     parte_decimal_formatada = parte_decimal.ljust(2, '0')[:2]
     
     # Junta a parte inteira e a parte decimal com a vírgula
-    numero_formatado = parte_inteira_formatada +  parte_decimal_formatada
+    numero_formatado = parte_inteira_formatada + ',' + parte_decimal_formatada
     
     return numero_formatado
 def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
