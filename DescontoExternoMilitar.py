@@ -201,9 +201,10 @@ if selected_country:
         st.write(f"O valor do posto selecionado é: {conversion_factor}")
         
         # Inputs de data para data de ida e volta
-        start_date = st.date_input("Selecione a data de ida:")
-        end_date = st.date_input("Selecione a data de volta:")
-        
+        start_date = st.date_input("Selecione a data de ida:",format="DD/MM/YYYY")
+        end_date = st.date_input("Selecione a data de volta:",format="DD/MM/YYYY")
+    
+       
         # Calcular a diferença de dias entre as datas
         if start_date and end_date:
             delta = end_date - start_date
