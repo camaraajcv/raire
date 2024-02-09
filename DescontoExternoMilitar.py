@@ -189,3 +189,7 @@ if selected_country:
 
     if selected_post:
         st.write(f"Você selecionou o posto: {selected_post}")
+        
+        # Obter o valor do posto selecionado
+        conversion_factor = data[selected_country][selected_post]
+        st.write(f"O valor do posto selecionado é: {conversion_factor}")
