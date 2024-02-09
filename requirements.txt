@@ -4,4 +4,4 @@ pandas
 pydeck
 streamlit
 PyMuPDF
-datepicker
+streamlit-datepicker
