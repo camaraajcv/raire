@@ -183,10 +183,8 @@ with st.form("meu_formulario"):
     # Armazenar o país selecionado na session_state
     st.session_state.selected_country = selected_country
 
-    # Obtendo os postos correspondentes ao país selecionado
-    selected_post_options = list(data[selected_country].keys())
-
     # Seletor de posto
+    selected_post_options = list(data[selected_country].keys())
     selected_post = st.selectbox("Selecione o posto", selected_post_options)
 
     # Obtendo o fator de conversão para o posto selecionado
