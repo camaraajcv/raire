@@ -180,8 +180,10 @@ with st.form("meu_formulario"):
     # Seletor de país
     selected_country = st.selectbox("Selecione o país", list(data.keys()))
 
-    # Obtendo o posto correspondente ao país selecionado
+    # Obtendo os postos correspondentes ao país selecionado
     selected_post_options = list(data[selected_country].keys())
+
+    # Seletor de posto
     selected_post = st.selectbox("Selecione o posto", selected_post_options)
 
     # Obtendo o fator de conversão para o posto selecionado
