@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime
-
+from datepicker import st_date_input
 
 # Dicionário de dados contendo país, posto e fator de conversão
 data = {
