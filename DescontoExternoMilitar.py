@@ -180,6 +180,9 @@ with st.form("meu_formulario"):
     # Seletor de país
     selected_country = st.selectbox("Selecione o país", list(data.keys()))
 
+    # Armazenar o país selecionado na session_state
+    st.session_state.selected_country = selected_country
+
     # Obtendo os postos correspondentes ao país selecionado
     selected_post_options = list(data[selected_country].keys())
 
@@ -198,14 +201,6 @@ with st.form("meu_formulario"):
 
     # Botão para calcular o RAIRE
     submitted = st.form_submit_button("Calcular RAIRE")
-
-# Atualizar o valor do posto após a seleção do país
-if not submitted:
-    selected_country = st.session_state.get("selected_country")
-    if selected_country:
-        selected_post_options = list(data[selected_country].keys())
-        selected_post = st.selectbox("Selecione o posto", selected_post_options)
-    st.session_state["selected_country"] = selected_country
 
 # Mostrar o resultado
 if submitted:
