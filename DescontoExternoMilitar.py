@@ -181,9 +181,12 @@ with st.form("meu_formulario"):
     selected_country = st.selectbox("Selecione o país", list(data.keys()))
 
     if selected_country:
-        # Seletor de postos
+        # Espaço vazio para o seletor de postos
+        selected_post_placeholder = st.empty()
+
+        # Atualiza o seletor de postos
         selected_post_options = list(data[selected_country].keys())
-        selected_post = st.selectbox("Selecione o posto", selected_post_options)
+        selected_post = selected_post_placeholder.selectbox("Selecione o posto", selected_post_options)
 
         # Seletor de datas
         start_date = st.date_input("Selecione a data de início:")
