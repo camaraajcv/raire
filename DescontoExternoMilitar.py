@@ -212,7 +212,7 @@ if selected_country:
         
         # Obter o valor do posto selecionado
         conversion_factor = data[selected_country][selected_post]
-        st.write(f"O valor do posto selecionado é: {conversion_factor}")
+        st.warning(f"O valor do posto selecionado é: {conversion_factor}")
         
         # Inputs de data para data de ida e volta
         start_date = st.date_input("Selecione a data de ida:",format="DD/MM/YYYY")
