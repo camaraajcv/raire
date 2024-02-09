@@ -213,3 +213,12 @@ if selected_country:
                 # Obter o valor do grau hierárquico selecionado
                 selected_rank_value = tabela[selected_rank]
                 st.write(f"O valor do grau hierárquico selecionado é: {selected_rank_value}")
+                
+                # Calcular o valor do RAIRE
+                if difference_in_days >= 30:
+                    valor_raire = conversion_factor * selected_rank_value
+                else:
+                    proporcao = difference_in_days / 30
+                    valor_raire = conversion_factor * selected_rank_value * proporcao
+                    
+                st.success(f"O RAIRE calculado é: {valor_raire:.2f}")
