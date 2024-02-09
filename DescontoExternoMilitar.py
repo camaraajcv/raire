@@ -223,5 +223,7 @@ if selected_country:
                 else:
                     proporcao = difference_in_days / 30
                     valor_raire = conversion_factor * selected_rank_value * proporcao
-                                    
-                st.success(f"O RAIRE calculado é: {valor_raire}")
+                    
+                # Formatar o valor do RAIRE para moeda em dólar
+                valor_raire_usd = "${:,.2f}".format(valor_raire)
+                st.success(f"O RAIRE calculado é: {valor_raire_usd}")
