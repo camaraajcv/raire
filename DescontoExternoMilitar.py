@@ -170,17 +170,9 @@ def formatar_numero(numero):
     parte_inteira = partes[0]
     parte_decimal = partes[1] if len(partes) > 1 else '00'
     
-    # Inverte a parte inteira para facilitar a adição dos pontos de milhar
-    parte_inteira_invertida = parte_inteira[::-1]
-    parte_inteira_formatada = ''
-    
     # Adiciona os pontos de milhar
-    for i in range(0, len(parte_inteira_invertida), 3):
-        parte_inteira_formatada += parte_inteira_invertida[i:i+3] + '.'
-        
-    # Remove o ponto de milhar extra que foi adicionado no final
-    parte_inteira_formatada = parte_inteira_formatada[::-1].strip('.')
-    
+    parte_inteira_formatada = '{0:,}'.format(int(parte_inteira)).replace(',', '.')
+
     # Formata a parte decimal com duas casas decimais
     parte_decimal_formatada = parte_decimal.ljust(2, '0')[:2]
     
