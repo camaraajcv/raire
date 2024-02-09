@@ -1,6 +1,9 @@
 import streamlit as st
 from datetime import datetime
+import locale
 
+# Configurar a localização para formatação de moeda
+locale.setlocale(locale.LC_ALL, '')
 # Dicionário de dados contendo país, posto e fator de conversão
 data = {
     "": {},  # Adicionando um país em branco
@@ -224,5 +227,5 @@ if selected_country:
                     valor_raire = conversion_factor * selected_rank_value * proporcao
                     
                 # Formatar o valor do RAIRE para moeda em dólar
-                valor_raire_usd = "${:,.2f}".format(valor_raire)
+                valor_raire_usd = locale.currency(valor_raire, grouping=True)
                 st.success(f"O RAIRE calculado é: {valor_raire_usd}")
