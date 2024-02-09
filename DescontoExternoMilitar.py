@@ -212,25 +212,25 @@ if selected_country:
         
         # Obter o valor do posto selecionado
         conversion_factor = data[selected_country][selected_post]
-        st.warning(f"O valor do posto selecionado é: {conversion_factor}")
+        st.warning(f"O fator do posto selecionado é: {conversion_factor}")
         
         # Inputs de data para data de ida e volta
-        start_date = st.date_input("Selecione a data de ida:",format="DD/MM/YYYY")
-        end_date = st.date_input("Selecione a data de volta:",format="DD/MM/YYYY")
+        start_date = st.date_input("Selecione a data de início da Portaria:",format="DD/MM/YYYY")
+        end_date = st.date_input("Selecione a data de término da Portaria:",format="DD/MM/YYYY")
     
        
         # Calcular a diferença de dias entre as datas
         if start_date and end_date:
             delta = end_date - start_date
             difference_in_days = delta.days
-            st.write(f"A diferença de dias entre as datas é: {difference_in_days}")
+            st.warning(f"A diferença de dias entre as datas é: {difference_in_days}")
             
             # Seletor de grau hierárquico
-            selected_rank = st.selectbox("Selecione o grau hierárquico:", rank_options)
+            selected_rank = st.selectbox("Selecione seu grau hierárquico:", rank_options)
             if selected_rank:
                 # Obter o valor do grau hierárquico selecionado
                 selected_rank_value = tabela[selected_rank]
-                st.write(f"O valor do grau hierárquico selecionado é: {selected_rank_value}")
+                st.warning(f"O valor do grau hierárquico selecionado é: {selected_rank_value}")
                 
                 # Calcular o valor do RAIRE
                 if difference_in_days >= 30:
@@ -245,4 +245,4 @@ if selected_country:
                 # Modificação para formatar o valor em RAIRE
                 valor_raire_formatado = "{:,.2f}".format(valor_raire).replace(",", "-").replace(".", ",").replace("-", ".")
 
-                st.success(f"O RAIRE calculado é: $ {valor_raire_formatado}")
+                st.success(f"O Valor da RAIRE calculada é: $ {valor_raire_formatado} dólares.")
