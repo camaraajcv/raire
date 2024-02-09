@@ -188,12 +188,19 @@ with st.form("meu_formulario"):
         selected_post_options = list(data[selected_country].keys())
         selected_post = selected_post_placeholder.selectbox("Selecione o posto", selected_post_options)
 
+        # Espaço vazio para o seletor de datas
+        start_date_placeholder = st.empty()
+        end_date_placeholder = st.empty()
+
         # Seletor de datas
-        start_date = st.date_input("Selecione a data de início:")
-        end_date = st.date_input("Selecione a data de término:")
+        start_date = start_date_placeholder.date_input("Selecione a data de início:")
+        end_date = end_date_placeholder.date_input("Selecione a data de término:")
+
+        # Espaço vazio para a caixa de seleção do grau hierárquico
+        grau_hierarquico_placeholder = st.empty()
 
         # Caixa de seleção para escolher o grau hierárquico
-        grau_hierarquico = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
+        grau_hierarquico = grau_hierarquico_placeholder.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
 
         # Botão para calcular o RAIRE
         submitted = st.form_submit_button("Calcular RAIRE")
