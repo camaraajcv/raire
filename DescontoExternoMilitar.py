@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, date, timedelta
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
@@ -215,7 +215,7 @@ if selected_country:
         st.warning(f"O fator do posto selecionado é: {conversion_factor}")
         
         # Inputs de data para data de ida e volta
-        start_date = st.date_input("Selecione a data de início da Portaria:",format="DD/MM/YYYY")
+        start_date = st.date_input("Selecione a data de início da Portaria:",format="DD/MM/YYYY",min_value=date(2024, 1, 1))
         end_date = st.date_input("Selecione a data de término da Portaria:",format="DD/MM/YYYY")
     
        
