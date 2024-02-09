@@ -202,3 +202,4 @@ with st.form("meu_formulario"):
         if submitted:
             valor_raire = calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor)
             st.write(f"O RAIRE calculado é: ${valor_raire:.2f}")
+            
