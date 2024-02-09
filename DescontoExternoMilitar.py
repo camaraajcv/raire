@@ -180,12 +180,9 @@ with st.form("meu_formulario"):
     # Seletor de país
     selected_country = st.selectbox("Selecione o país", list(data.keys()))
 
-    # Seletor de posto
-    selected_post_options = list(data[selected_country].keys())
-    selected_post = st.selectbox("Selecione o posto", selected_post_options)
-
-    # Obtendo o fator de conversão para o posto selecionado
-    conversion_factor = data[selected_country][selected_post]
+    # Seletor de postos
+    selected_post_options = list(data[selected_country].keys()) if selected_country else []
+    selected_post = st.selectbox("Selecione o posto", selected_post_options) if selected_post_options else None
 
     # Seletor de datas
     start_date = st.date_input("Selecione a data de início:")
@@ -201,4 +198,3 @@ with st.form("meu_formulario"):
 if submitted:
     valor_raire = calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor)
     st.write(f"O RAIRE calculado é: ${valor_raire:.2f}")
-    
