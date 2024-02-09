@@ -199,7 +199,7 @@ with st.form("meu_formulario"):
         submitted = st.form_submit_button("Calcular RAIRE")
 
         # Mostrar o resultado
-        if submitted:
-            valor_raire = calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor)
-            st.write(f"O RAIRE calculado é: ${valor_raire:.2f}")
-            
+    if submitted:
+        valor_raire = calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor)
+        st.write(f"O RAIRE calculado é: ${valor_raire:.2f}")
+
