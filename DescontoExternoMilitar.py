@@ -193,3 +193,13 @@ if selected_country:
         # Obter o valor do posto selecionado
         conversion_factor = data[selected_country][selected_post]
         st.write(f"O valor do posto selecionado é: {conversion_factor}")
+        
+        # Inputs de data para data de ida e volta
+        start_date = st.date_input("Selecione a data de ida:")
+        end_date = st.date_input("Selecione a data de volta:")
+        
+        # Calcular a diferença de dias entre as datas
+        if start_date and end_date:
+            delta = end_date - start_date
+            difference_in_days = delta.days
+            st.write(f"A diferença de dias entre as datas é: {difference_in_days}")
