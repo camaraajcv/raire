@@ -177,9 +177,12 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
 with st.form("meu_formulario"):
     st.write("## Calcule o RAIRE")
 
-    # Seletor de país e posto
+    # Seletor de país
     selected_country = st.selectbox("Selecione o país", list(data.keys()))
-    selected_post = st.selectbox("Selecione o posto", list(data[selected_country].keys()))
+
+    # Obtendo o posto correspondente ao país selecionado
+    selected_post_options = list(data[selected_country].keys())
+    selected_post = st.selectbox("Selecione o posto", selected_post_options)
 
     # Obtendo o fator de conversão para o posto selecionado
     conversion_factor = data[selected_country][selected_post]
