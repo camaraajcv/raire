@@ -203,3 +203,8 @@ if selected_country:
             delta = end_date - start_date
             difference_in_days = delta.days
             st.write(f"A diferença de dias entre as datas é: {difference_in_days}")
+            
+            # Seletor de grau hierárquico
+            selected_rank = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
+            if selected_rank:
+                st.write(f"Você selecionou o grau hierárquico: {selected_rank}")
