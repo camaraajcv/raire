@@ -179,3 +179,13 @@ selected_country = st.selectbox("Selecione o país", list(data.keys()))
 # Se houver um país selecionado
 if selected_country:
     st.write(f"Você selecionou: {selected_country}")
+    
+    # Espaço vazio para o seletor de postos
+    selected_post_placeholder = st.empty()
+
+    # Atualiza o seletor de postos
+    selected_post_options = list(data[selected_country].keys())
+    selected_post = selected_post_placeholder.selectbox("Selecione o posto", selected_post_options)
+
+    if selected_post:
+        st.write(f"Você selecionou o posto: {selected_post}")
