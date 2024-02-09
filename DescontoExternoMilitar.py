@@ -208,7 +208,7 @@ if selected_country:
     selected_post = selected_post_placeholder.selectbox("Selecione o posto", selected_post_options)
 
     if selected_post:
-        st.info('Você selecionou o posto: {selected_post}',icon="ℹ️")
+        st.info(f'Você selecionou o posto: {selected_post}',icon="ℹ️")
         
         # Obter o valor do posto selecionado
         conversion_factor = data[selected_country][selected_post]
