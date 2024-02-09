@@ -225,5 +225,9 @@ if selected_country:
                     valor_raire = conversion_factor * selected_rank_value * proporcao
                     
                 # Formatar o valor do RAIRE para moeda em dólar
-                valor_raire_usd = "${:,.2f}".format(valor_raire)
-                st.success(f"O RAIRE calculado é: {valor_raire_usd}")
+valor_raire_usd = "${:,.2f}".format(valor_raire)
+
+# Modificação para formatar o valor em RAIRE
+valor_raire_formatado = "{:,.2f}".format(valor_raire).replace(",", ".")
+
+st.success(f"O RAIRE calculado é: $ {valor_raire_formatado}")
