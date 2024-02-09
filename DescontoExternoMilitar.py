@@ -165,7 +165,29 @@ tabela = {
     "Suboficial, Subtenente, Sargento e Praças Especiais (Alunos de Órgão de formação de Oficiais da Ativa).": 20,
     "Cabo e demais Praças.": 10
 }
-
+def formatar_numero(numero):
+    partes = str(numero).split('.')
+    parte_inteira = partes[0]
+    parte_decimal = partes[1] if len(partes) > 1 else '00'
+    
+    # Inverte a parte inteira para facilitar a adição dos pontos de milhar
+    parte_inteira_invertida = parte_inteira[::-1]
+    parte_inteira_formatada = ''
+    
+    # Adiciona os pontos de milhar
+    for i in range(0, len(parte_inteira_invertida), 3):
+        parte_inteira_formatada += parte_inteira_invertida[i:i+3] + '.'
+        
+    # Remove o ponto de milhar extra que foi adicionado no final
+    parte_inteira_formatada = parte_inteira_formatada[::-1].strip('.')
+    
+    # Formata a parte decimal com duas casas decimais
+    parte_decimal_formatada = parte_decimal.ljust(2, '0')[:2]
+    
+    # Junta a parte inteira e a parte decimal com a vírgula
+    numero_formatado = parte_inteira_formatada + ',' + parte_decimal_formatada
+    
+    return numero_formatado
 def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
     delta = end_date - start_date
     dias = delta.days
@@ -226,4 +248,4 @@ if selected_country:
                     
                 # Formatar o valor do RAIRE para moeda em dólar
                 valor_raire_usd = "${:,.2f}".format(valor_raire)
-                st.success(f"O RAIRE calculado é: {valor_raire_usd}")
+                st.success(f"O RAIRE calculado é: {formatar_numero(valor_raire_usd)}")
