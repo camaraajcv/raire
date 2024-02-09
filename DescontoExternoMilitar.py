@@ -1,7 +1,9 @@
 import streamlit as st
+from datetime import datetime
 
 # Dicionário de dados contendo país, posto e fator de conversão
 data = {
+    "": {},  # Adicionando um país em branco
     "Afeganistão": {"Cabul - FCG": 85.28},
     "África do Sul": {"Cidade do Cabo - FCG": 45.11, "Pretória": 47.32},
     "Albânia": {"Tirana": 51.52},
@@ -176,8 +178,8 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
 # Lista de graus hierárquicos
 rank_options = list(tabela.keys())
 
-# Seletor de país
-selected_country = st.selectbox("Selecione o país", list(data.keys()))
+# Seletor de país inicialmente vazio
+selected_country = st.selectbox("Selecione o país", [""] + list(data.keys()))
 
 # Se houver um país selecionado
 if selected_country:
@@ -221,4 +223,6 @@ if selected_country:
                     proporcao = difference_in_days / 30
                     valor_raire = conversion_factor * selected_rank_value * proporcao
                     
-                st.success(f"O RAIRE calculado é: {valor_raire:.2f}")
+                # Formatar o valor do RAIRE para moeda em dólar
+                valor_raire_usd = "${:,.2f}".format(valor_raire)
+                st.success(f"O RAIRE calculado é: {valor_raire_usd}")
