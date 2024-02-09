@@ -3,7 +3,7 @@ from datetime import datetime
 import locale
 
 # Configurar a localização para formatação de moeda
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 # Dicionário de dados contendo país, posto e fator de conversão
 data = {
     "": {},  # Adicionando um país em branco
