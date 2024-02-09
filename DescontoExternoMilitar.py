@@ -228,6 +228,6 @@ if selected_country:
                 valor_raire_usd = "${:,.2f}".format(valor_raire)
 
                 # Modificação para formatar o valor em RAIRE
-                valor_raire_formatado = "{:,.2f}".format(valor_raire).replace(",", ".")
+                valor_raire_formatado = "{:,.2f}".format(valor_raire).replace(",", "-").replace(".", ",").replace("-", ".")
 
                 st.success(f"O RAIRE calculado é: $ {valor_raire_formatado}")
