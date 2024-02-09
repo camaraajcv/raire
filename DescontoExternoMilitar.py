@@ -173,6 +173,9 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor):
         valor_raire = conversion_factor * tabela[grau_hierarquico] * proporcao
     return valor_raire
 
+# Lista de graus hierárquicos
+rank_options = list(tabela.keys())
+
 # Seletor de país
 selected_country = st.selectbox("Selecione o país", list(data.keys()))
 
@@ -205,6 +208,8 @@ if selected_country:
             st.write(f"A diferença de dias entre as datas é: {difference_in_days}")
             
             # Seletor de grau hierárquico
-            selected_rank = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
+            selected_rank = st.selectbox("Selecione o grau hierárquico:", rank_options)
             if selected_rank:
-                st.write(f"Você selecionou o grau hierárquico: {selected_rank}")
+                # Obter o valor do grau hierárquico selecionado
+                selected_rank_value = tabela[selected_rank]
+                st.write(f"O valor do grau hierárquico selecionado é: {selected_rank_value}")
