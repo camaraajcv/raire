@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime
-from babel.numbers import format_currency
+
 
 # Dicionário de dados contendo país, posto e fator de conversão
 data = {
@@ -223,7 +223,5 @@ if selected_country:
                 else:
                     proporcao = difference_in_days / 30
                     valor_raire = conversion_factor * selected_rank_value * proporcao
-                    
-                # Formatar o valor do RAIRE para moeda em dólar
-                valor_raire_usd = format_currency(valor_raire, 'USD', locale='en_US')
-                st.success(f"O RAIRE calculado é: {valor_raire_usd}")
+                                    
+                st.success(f"O RAIRE calculado é: {valor_raire}")
