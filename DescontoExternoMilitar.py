@@ -180,19 +180,20 @@ with st.form("meu_formulario"):
     # Seletor de país
     selected_country = st.selectbox("Selecione o país", list(data.keys()))
 
-    # Seletor de postos
-    selected_post_options = list(data[selected_country].keys()) if selected_country else []
-    selected_post = st.selectbox("Selecione o posto", selected_post_options) if selected_post_options else None
+    if selected_country:
+        # Seletor de postos
+        selected_post_options = list(data[selected_country].keys())
+        selected_post = st.selectbox("Selecione o posto", selected_post_options)
 
-    # Seletor de datas
-    start_date = st.date_input("Selecione a data de início:")
-    end_date = st.date_input("Selecione a data de término:")
+        # Seletor de datas
+        start_date = st.date_input("Selecione a data de início:")
+        end_date = st.date_input("Selecione a data de término:")
 
-    # Caixa de seleção para escolher o grau hierárquico
-    grau_hierarquico = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
+        # Caixa de seleção para escolher o grau hierárquico
+        grau_hierarquico = st.selectbox("Selecione o grau hierárquico:", list(tabela.keys()))
 
-    # Botão para calcular o RAIRE
-    submitted = st.form_submit_button("Calcular RAIRE")
+        # Botão para calcular o RAIRE
+        submitted = st.form_submit_button("Calcular RAIRE")
 
 # Mostrar o resultado
 if submitted:
