@@ -198,7 +198,7 @@ selected_country = st.selectbox("Selecione o país", [""] + list(data.keys()))
 
 # Se houver um país selecionado
 if selected_country:
-    st.error(f"Você selecionou: {selected_country}")
+    st.info(f"Você selecionou: {selected_country}")
     
     # Espaço vazio para o seletor de postos
     selected_post_placeholder = st.empty()
@@ -223,7 +223,10 @@ if selected_country:
         if start_date and end_date:
             delta = end_date - start_date
             difference_in_days = delta.days
-            st.warning(f"A diferença de dias entre as datas é: {difference_in_days}")
+            if difference_in_days == 0:
+                st.error("As datas selecionadas são iguais.")
+            else:
+                st.warning(f"A diferença de dias entre as datas é: {difference_in_days}")
             
             # Seletor de grau hierárquico
             selected_rank = st.selectbox("Selecione seu grau hierárquico:", rank_options)
