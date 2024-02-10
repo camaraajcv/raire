@@ -1,6 +1,7 @@
 import streamlit as st
 from datetime import datetime, date, timedelta
 import folium
+from streamlit_folium import folium_static
 from geopy.geocoders import Nominatim
 
 # Inicializar o geocodificador do OpenStreetMap Nominatim
