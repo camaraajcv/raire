@@ -44,7 +44,7 @@ def on_click(event, **kwargs):
 
 # Adicionar evento de clique ao mapa
 m.add_child(folium.ClickForMarker(popup="Local selecionado", callback=on_click))
-Nesta
+
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
