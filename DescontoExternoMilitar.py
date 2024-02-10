@@ -34,8 +34,8 @@ for country, coords in teste.items():
 folium_static(m)
 
 # Função para lidar com cliques no mapa
-def on_click(event):
-    lat, lon = event.latitude, event.longitude
+def on_click(event, **kwargs):
+    lat, lon = event.latlng
     location = geolocator.reverse((lat, lon), exactly_one=True)
     if location:
         st.write(f"Você clicou em {location.address}")
@@ -44,6 +44,7 @@ def on_click(event):
 
 # Adicionar evento de clique ao mapa
 m.add_child(folium.ClickForMarker(popup="Local selecionado", callback=on_click))
+Nesta
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
