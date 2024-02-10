@@ -190,7 +190,31 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor, nu
         valor_raire *= 1.10  # 10% de acréscimo para 3 ou mais dependentes
     
     return valor_raire
+    # Inicializar o geocoder
+    geolocator = Nominatim(user_agent="geoapiExercises")
 
+    # Obter as coordenadas de latitude e longitude de cada país
+    for country, cities in data.items():
+        if cities:
+            for city, _ in cities.items():
+                location = geolocator.geocode(city)
+                if location:
+                    data[country][city] = {"lat": location.latitude, "lon": location.longitude}
+
+    # Título do aplicativo
+    st.title("Selecione um país no mapa")
+
+    # Inicializar o mapa com a localização central
+    m = folium.Map(location=[0, 0], zoom_start=2)
+
+    # Adicionar marcadores para cada país
+    for country, cities in data.items():
+        if cities:
+            for city, coords in cities.items():
+                folium.Marker(location=[coords["lat"], coords["lon"]], popup=f"{city}, {country}").add_to(m)
+
+    # Renderizar o mapa usando streamlit
+    st.write(m)
 # Lista de graus hierárquicos
 rank_options = list(tabela.keys())
 
