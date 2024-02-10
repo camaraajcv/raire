@@ -6,3 +6,4 @@ streamlit
 PyMuPDF
 folium
 geopy
+streamlit_folium
