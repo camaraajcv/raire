@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import datetime, date, timedelta
 import folium
-from streamlit_folium import folium_static
+from streamlit_folium import folium_static, folium_click_event
 from geopy.geocoders import Nominatim
 
 # Inicializar o geocodificador do OpenStreetMap Nominatim
@@ -31,19 +31,19 @@ for country, coords in teste.items():
         folium.Marker(location=[coords["latitude"], coords["longitude"]], popup=country).add_to(m)
 
 # Função para lidar com cliques no mapa
-def on_click(event, **kwargs):
-    lat, lon = event.latlng
+def on_click(event=None, **kwargs):
+    lat, lon = event["lat"], event["lng"]
     location = geolocator.reverse((lat, lon), exactly_one=True)
     if location:
         st.write(f"Você clicou em {location.address}")
     else:
         st.write("Não foi possível identificar o país clicado.")
 
-# Adicionar manipulador de eventos de clique no mapa
-m.on_click(on_click)
-
 # Renderizar o mapa usando streamlit
 folium_static(m)
+
+# Registrar a função on_click para manipular os eventos de clique no mapa
+folium_click_event(on_click)
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
