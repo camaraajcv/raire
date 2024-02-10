@@ -190,24 +190,17 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor, nu
         valor_raire *= 1.10  # 10% de acréscimo para 3 ou mais dependentes
     
     return valor_raire
-# Função para obter as coordenadas de latitude e longitude de uma cidade usando o OpenStreetMap Nominatim
-def get_coordinates(city):
-    import requests
-    url = f"https://nominatim.openstreetmap.org/search?q={city}&format=json"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        if data:
-            return {"lat": float(data[0]['lat']), "lon": float(data[0]['lon'])}
-    return None
-
-# Obter as coordenadas de latitude e longitude de cada cidade em cada país
-for country, cities in data.items():
-    if cities:
-        for city, _ in cities.items():
-            coords = get_coordinates(city)
-            if coords:
-                data[country][city] = coords
+# Dicionário de dados com os países e suas coordenadas de latitude e longitude
+teste = {
+    "": {},  # Adicionando um país em branco
+    "África do Sul": {"latitude": -30.5595, "longitude": 22.9375},
+    "Albânia": {"latitude": 41.1533, "longitude": 20.1683},
+    "Alemanha": {"latitude": 51.1657, "longitude": 10.4515},
+    "Angola": {"latitude": -11.2027, "longitude": 17.8739},
+    "Arábia Saudita": {"latitude": 23.8859, "longitude": 45.0792},
+    "Argélia": {"latitude": 28.0339, "longitude": 1.6596},
+    # Adicione o restante dos países com suas coordenadas de latitude e longitude aqui
+}
 
 # Título do aplicativo
 st.title("Selecione um país no mapa")
@@ -216,10 +209,9 @@ st.title("Selecione um país no mapa")
 m = folium.Map(location=[0, 0], zoom_start=2)
 
 # Adicionar marcadores para cada país
-for country, cities in data.items():
-    if cities:
-        for city, coords in cities.items():
-            folium.Marker(location=[coords["lat"], coords["lon"]], popup=f"{city}, {country}").add_to(m)
+for country, coords in teste.items():
+    if coords:  # Verifique se há coordenadas para o país
+        folium.Marker(location=[coords["latitude"], coords["longitude"]], popup=country).add_to(m)
 
 # Renderizar o mapa usando streamlit
 st.write(m)
