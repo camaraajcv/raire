@@ -34,10 +34,9 @@ for country, coords in teste.items():
 folium_static(m)
 
 # Obter o nome do país clicado no mapa
-clicked_point = folium.ClickForMarker(popup=None)
-
-if clicked_point:
-    latitude, longitude = clicked_point.location
+if m.click_info:
+    clicked_point = m.click_info
+    latitude, longitude = clicked_point["location"]
     location = geolocator.reverse((latitude, longitude), exactly_one=True)
     if location:
         st.write(f"Você clicou em {location.address}")
