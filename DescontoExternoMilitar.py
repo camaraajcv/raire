@@ -190,16 +190,24 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor, nu
         valor_raire *= 1.10  # 10% de acréscimo para 3 ou mais dependentes
     
     return valor_raire
-# Inicializar o geocoder
-geolocator = Nominatim(user_agent="geoapiExercises")
+# Função para obter as coordenadas de latitude e longitude de uma cidade usando o OpenStreetMap Nominatim
+def get_coordinates(city):
+    import requests
+    url = f"https://nominatim.openstreetmap.org/search?q={city}&format=json"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if data:
+            return {"lat": float(data[0]['lat']), "lon": float(data[0]['lon'])}
+    return None
 
-# Obter as coordenadas de latitude e longitude de cada país
+# Obter as coordenadas de latitude e longitude de cada cidade em cada país
 for country, cities in data.items():
     if cities:
         for city, _ in cities.items():
-            location = geolocator.geocode(city)
-            if location:
-                data[country][city] = {"lat": location.latitude, "lon": location.longitude}
+            coords = get_coordinates(city)
+            if coords:
+                data[country][city] = coords
 
 # Título do aplicativo
 st.title("Selecione um país no mapa")
