@@ -1,7 +1,6 @@
 import streamlit as st
 from datetime import datetime, date, timedelta
-import folium
-from geopy.geocoders import Nominatim
+
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
@@ -190,31 +189,7 @@ def calcular_raire(start_date, end_date, grau_hierarquico, conversion_factor, nu
         valor_raire *= 1.10  # 10% de acréscimo para 3 ou mais dependentes
     
     return valor_raire
-# Dicionário de dados com os países e suas coordenadas de latitude e longitude
-teste = {
-    "": {},  # Adicionando um país em branco
-    "África do Sul": {"latitude": -30.5595, "longitude": 22.9375},
-    "Albânia": {"latitude": 41.1533, "longitude": 20.1683},
-    "Alemanha": {"latitude": 51.1657, "longitude": 10.4515},
-    "Angola": {"latitude": -11.2027, "longitude": 17.8739},
-    "Arábia Saudita": {"latitude": 23.8859, "longitude": 45.0792},
-    "Argélia": {"latitude": 28.0339, "longitude": 1.6596},
-    # Adicione o restante dos países com suas coordenadas de latitude e longitude aqui
-}
 
-# Título do aplicativo
-st.title("Selecione um país no mapa")
-
-# Inicializar o mapa com a localização central
-m = folium.Map(location=[0, 0], zoom_start=2)
-
-# Adicionar marcadores para cada país
-for country, coords in teste.items():
-    if coords:  # Verifique se há coordenadas para o país
-        folium.Marker(location=[coords["latitude"], coords["longitude"]], popup=country).add_to(m)
-
-# Renderizar o mapa usando streamlit
-st.write(m)
 # Lista de graus hierárquicos
 rank_options = list(tabela.keys())
 
