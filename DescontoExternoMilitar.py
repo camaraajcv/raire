@@ -1,5 +1,7 @@
 import streamlit as st
 from datetime import datetime, date, timedelta
+import folium
+from geopy.geocoders import Nominatim
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
