@@ -31,7 +31,7 @@ for country, coords in teste.items():
         folium.Marker(location=[coords["latitude"], coords["longitude"]], popup=country).add_to(m)
 
 # Função para lidar com cliques no mapa
-def on_click(event):
+def on_click(event, **kwargs):
     lat, lon = event.latlng
     location = geolocator.reverse((lat, lon), exactly_one=True)
     if location:
@@ -40,15 +40,10 @@ def on_click(event):
         st.write("Não foi possível identificar o país clicado.")
 
 # Adicionar manipulador de eventos de clique no mapa
-m.add_child(folium.ClickForMarker(popup=None))
-m.add_child(folium.ClickForMarker(popup=None))
-m.add_child(folium.ClickForMarker(popup=None))
+m.on_click(on_click)
 
 # Renderizar o mapa usando streamlit
 folium_static(m)
-
-# Registrar a função on_click para manipular os eventos de clique no mapa
-m.add_click_handler(on_click)
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
