@@ -216,8 +216,16 @@ if selected_country:
         st.warning(f"O fator do posto selecionado é: {conversion_factor}")
         
         # Inputs de data para data de ida e volta
-        start_date = st.date_input("Selecione a data de início da Portaria:",format="DD/MM/YYYY",min_value=date(2024, 1, 1))
-        end_date = st.date_input("Selecione a data de término da Portaria:",format="DD/MM/YYYY")
+        start_date = st.date_input("Selecione a data de início da Portaria:", format="DD/MM/YYYY", min_value=date(2024, 1, 1))
+        end_date = st.date_input("Selecione a data de término da Portaria:", format="DD/MM/YYYY")
+        
+        # Verificar se a data de término é igual ou menor que a data atual
+        if end_date <= date.today():
+            st.write("VOCÊ PRECISA SELECIONAR O PERÍODO CORRETAMENTE")
+        else:
+            # Calcular a diferença de dias entre as datas
+            delta = end_date - start_date
+            st.write(f"Período de {delta.days} dias")
         
         # Seletor para indicar se leva dependentes e quantos
         numero_dependentes = st.select_slider("Número de dependentes:", options=[0, 1, 2, 3, 4, 5])
