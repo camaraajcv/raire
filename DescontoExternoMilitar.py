@@ -163,7 +163,7 @@ tabela = {
     "Vice-Almirante, General-de-divisão e Major-Brigadeiro.": 100,
     "Contra-Almirante, General-de-Brigada e Brigadeiro.": 100,
     "Capitão-de-Mar-e-Guerra/ Coronel e Capitão-de-Fragata / Tenente-Coronel.(Adido Militar, Adjunto de Adido Militar).": 90,
-    "Capitão-de-Mar-e-Guerra e Coronel .": 80,
+    "Capitão-de-Mar-e-Guerra e Coronel .": 90,
     "Capitão-de-Fragata e Tenente-Coronel.": 80,
     "Capitão-de-Corveta e Major.": 80,
     "Capitão-Tenente e Capitão.": 80,
