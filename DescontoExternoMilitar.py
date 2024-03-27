@@ -2,15 +2,15 @@ import streamlit as st
 from datetime import datetime, date, timedelta
 import folium
 
+import streamlit as st
+import subprocess
+
 # Função para executar outro script
 def run_another_script(script_path):
     """
     Runs the specified script.
     """
-    # Obtém o estado atual do Streamlit
-    session_state = st.report_thread.get_report_ctx().session
-    # Atualiza o estado com o caminho do novo script a ser executado
-    session_state.request_queue.enqueue(script_path)
+    subprocess.Popen(["streamlit", "run", script_path])
 
 # Título na barra lateral
 st.sidebar.title('Navegação')
@@ -18,6 +18,9 @@ st.sidebar.title('Navegação')
 # Link para outra página
 if st.sidebar.button('Ir para Outra Página'):
     run_another_script('pages/gerar_xml.py')
+
+# Conteúdo da página principal
+st.title('Página Principal')
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
