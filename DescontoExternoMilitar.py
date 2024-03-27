@@ -1,7 +1,14 @@
 import streamlit as st
 from datetime import datetime, date, timedelta
 import folium
+# Título na barra lateral
+st.sidebar.title('Navegação')
 
+# Link para outra página
+if st.sidebar.button('Ir para Outra Página'):
+    # Redirecionar para a outra página (abre um novo link)
+    # Aqui você precisa colocar o caminho correto para o seu arquivo outra_pagina.py
+    st.sidebar.markdown("[Link para Outra Página](gerar_xml.py)")
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
