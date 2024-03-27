@@ -1,21 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-# URL da imagem
-image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
-#Código HTML e CSS para ajustar a largura da imagem para 20% da largura da coluna e centralizar
-html_code = f'<div style="display: flex; justify-content: center;"><img src="{image_url}" alt="Imagem" style="width:8vw;"/></div>'
-# Exibir a imagem usando HTML
-st.markdown(html_code, unsafe_allow_html=True)
-
-# Centralizar o texto abaixo da imagem
-st.markdown("<h1 style='text-align: center; font-size: 1.5em;'>DIRETORIA DE ADMINISTRAÇÃO DA AERONÁUTICA</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center; font-size: 1.2em;'>SUBDIRETORIA DE PAGAMENTO DE PESSOAL</h2>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; font-size: 1em; text-decoration: underline;'>PP2 - DIVISÃO DE PAGAMENTO DE PESSOAL NO EXTERIOR</h3>", unsafe_allow_html=True)
-
-# Texto explicativo
-st.write("Gerando XML para o SIAFI")
 def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
     df['cpf'] = df['CPF'].astype(str).str.zfill(11)
     df['valor'] = df['Valor'].round(2)
@@ -25,7 +11,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
     xml_counter = 1
     cpf_list = []
 
-    dt_emis = datetime.now().strftime('%d/%m/%Y')
+    dt_emis = datetime.now().strftime('%Y-%m-%d')
     dt_ateste = datetime.now().strftime('%Y-%m-%d')
 
     for cpf, valor in aggregated_data.items():
@@ -49,7 +35,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
         <anoDH>{ano_referencia}</anoDH>
         <codTipoDH>RC</codTipoDH>
         <dadosBasicos>
-          <dtEmis>{dt_ateste}</dtEmis>
+          <dtEmis>{dt_emis}</dtEmis>
           <codUgPgto>120093</codUgPgto>
           <vlr>{total}</vlr>
           <txtObser>{txt_obser}</txtObser>
@@ -93,6 +79,9 @@ def main():
     if uploaded_file is not None:
         df = pd.read_excel(uploaded_file)
         st.write(df)
+
+        # Renomear as colunas conforme solicitado
+        df.rename(columns={'SARAM': 'SARAM', 'CPF': 'CPF', 'posto': 'Posto', 'nome': 'Nome', 'Valor': 'Valor', 'mes_ano': 'Mes_Ano'}, inplace=True)
 
         # Manter apenas as colunas relevantes
         df = df[['CPF', 'Valor']]
