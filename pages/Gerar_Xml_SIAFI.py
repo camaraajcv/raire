@@ -92,7 +92,7 @@ def main():
         st.write(df)
 
         st.write("---")
-        st.write(f"Total: R$ {df['valor'].sum():,.2f}")  # Mostrar a soma total da coluna 'valor' formatada
+        st.success(f"Total: $ {df['valor'].sum():,.2f}")  # Mostrar a soma total da coluna 'valor' formatada
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
