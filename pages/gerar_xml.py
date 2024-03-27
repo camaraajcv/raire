@@ -1,1 +1,2 @@
-print("teste")
+camara='alo'
+print(camara)
