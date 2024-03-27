@@ -85,14 +85,22 @@ def main():
     if uploaded_file is not None:
         df = pd.read_excel(uploaded_file, names=['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano'])  # Definir nomes das colunas explicitamente
 
+        # Formatando as colunas
+        df['saram'] = df['saram'].astype(str)
+        df['cpf'] = df['cpf'].astype(str).str.zfill(11)
+        df['valor'] = df['valor'].astype(float).map("${:,.2f}".format)
+
         st.write(df)
+
+        st.write("---")
+        st.write(f"Total: {df['valor'].sum()}")  # Mostrar a soma total da coluna 'valor' formatada
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
         ano_referencia = st.text_input("Ano de Referência", value=str(datetime.now().year))
         cpf_responsavel = st.text_input("CPF do Responsável")
-        txt_processo = st.text_input("Número do Processo")
-        txt_obser = st.text_input("Observação", value="RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE    DE 2024")
+        txt_processo = st.text_input("Texto do Processo")
+        txt_obser = "RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE MARÇO DE 2024"
 
         if st.button("Gerar XML"):
             if not df.empty:
