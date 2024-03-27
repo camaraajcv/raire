@@ -80,7 +80,7 @@ def main():
         df = pd.DataFrame(columns=['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano'])  # Criar um DataFrame com as colunas especificadas
 
         excel_df = pd.read_excel(uploaded_file)  # Ler os dados do Excel
-        df = df.append(excel_df[['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano']])  # Adicionar os dados relevantes do Excel ao DataFrame
+        df = pd.concat([df, excel_df[['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano']]])  # Adicionar os dados relevantes do Excel ao DataFrame
 
         st.write(df)
 
