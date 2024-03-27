@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import io
-import locale
 
 xml_counter = 1  # Definir xml_counter globalmente
 
@@ -44,7 +43,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
         <dadosBasicos>
           <dtEmis>{dt_emis}</dtEmis>
           <codUgPgto>120093</codUgPgto>
-          <vlr>{total}</vlr>
+          <vlr>{total:.2f}</vlr>
           <txtObser>{txt_obser}</txtObser>
           <txtProcesso>{txt_processo}</txtProcesso>
           <dtAteste>{dt_ateste}</dtAteste>
@@ -57,7 +56,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
         <outrosLanc>
           <numSeqItem>{numSeqItem_counter}</numSeqItem>
           <codSit>LDV014</codSit>
-          <vlr>{valor_cpf}</vlr>
+          <vlr>{valor_cpf:.2f}</vlr>
           <txtInscrA>{cpf}</txtInscrA>
           <numClassA>899910700</numClassA>
         </outrosLanc>"""
@@ -89,12 +88,11 @@ def main():
         # Formatando as colunas
         df['saram'] = df['saram'].astype(str)
         df['cpf'] = df['cpf'].astype(str).str.zfill(11)
-        df['valor'] = df['valor'].astype(float).map(locale.currency)
 
         st.write(df)
 
         st.write("---")
-        st.write(f"Total: {locale.currency(df['valor'].sum(), grouping=True)}")  # Mostrar a soma total da coluna 'valor' formatada
+        st.write(f"Total: R$ {df['valor'].sum():,.2f}")  # Mostrar a soma total da coluna 'valor' formatada
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
