@@ -17,7 +17,7 @@ st.sidebar.title('Navegação')
 
 # Link para outra página
 if st.sidebar.button('Ir para Outra Página'):
-    run_another_script('gerar_xml.py')
+    run_another_script('pages/gerar_xml.py')
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
