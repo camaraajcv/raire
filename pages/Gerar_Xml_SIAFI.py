@@ -107,7 +107,7 @@ def main():
         # Formatando as colunas
         df['saram'] = df['saram'].astype(str)
         df['cpf'] = df['cpf'].astype(str).str.zfill(11)
-        df['valor']= "{:,.2f}".format(df['valor']).replace(",", "-").replace(".", ",").replace("-", ".")
+        df['valor']= "{:,.2f}".format((df['valor'])).replace(",", "-").replace(".", ",").replace("-", ".")
         mes_ano = df['mes_ano'].iloc[0]
         st.write(df)
 
