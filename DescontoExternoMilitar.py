@@ -5,14 +5,6 @@ import folium
 import streamlit as st
 import subprocess
 
-
-# Título na barra lateral
-st.sidebar.title('Navegação')
-
-# Link para outra página
-if st.sidebar.button('Ir para Outra Página'):
-    run_another_script('pages/gerar_xml.py')
-
 # Conteúdo da página principal
 st.title('Página Principal')
 # URL da imagem
