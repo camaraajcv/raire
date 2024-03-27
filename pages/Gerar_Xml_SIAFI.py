@@ -2,7 +2,18 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import io
+ #URL da imagem
+image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
+#Código HTML e CSS para ajustar a largura da imagem para 20% da largura da coluna e centralizar
+html_code = f'<div style="display: flex; justify-content: center;"><img src="{image_url}" alt="Imagem" style="width:8vw;"/></div>'
+# Exibir a imagem usando HTML
+st.markdown(html_code, unsafe_allow_html=True)
+
+# Centralizar o texto abaixo da imagem
+st.markdown("<h1 style='text-align: center; font-size: 1.5em;'>DIRETORIA DE ADMINISTRAÇÃO DA AERONÁUTICA</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; font-size: 1.2em;'>SUBDIRETORIA DE PAGAMENTO DE PESSOAL</h2>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; font-size: 1em; text-decoration: underline;'>PP2 - DIVISÃO DE PAGAMENTO DE PESSOAL NO EXTERIOR</h3>", unsafe_allow_html=True)
 xml_counter = 1  # Definir xml_counter globalmente
 
 def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
