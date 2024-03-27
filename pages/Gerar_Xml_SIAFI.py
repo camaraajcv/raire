@@ -112,7 +112,10 @@ def main():
         st.write(df)
 
         st.write("---")
-        total_value = df['valor'].sum()
+        # Converta total_value para float antes de formatá-lo
+        total_value = float(total_value)
+
+        # Formate o valor_raire_formatado
         valor_raire_formatado = "{:,.2f}".format(total_value).replace(",", "-").replace(".", ",").replace("-", ".")
         st.success(f"Total:$ {valor_raire_formatado}")  # Mostrar a soma total da coluna 'valor' formatada
 
