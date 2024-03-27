@@ -3,8 +3,8 @@ import pandas as pd
 from datetime import datetime
 
 def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
-    df['cpf'] = df['CPF'].astype(str).str.zfill(11)
-    df['valor'] = df['Valor'].round(2)
+    df['cpf'] = df['cpf'].astype(str).str.zfill(11)
+    df['valor'] = df['valor'].round(2)
     aggregated_data = df.groupby('cpf')['valor'].sum()
 
     numSeqItem_counter = 1
@@ -80,22 +80,22 @@ def main():
         df = pd.read_excel(uploaded_file)
         st.write(df)
 
-        # Renomear as colunas conforme solicitado
-        df.rename(columns={'SARAM': 'SARAM', 'CPF': 'CPF', 'posto': 'Posto', 'nome': 'Nome', 'Valor': 'Valor', 'mes_ano': 'Mes_Ano'}, inplace=True)
+        # Verificar se as colunas originais existem antes de renomeá-las
+        if 'cpf' in df.columns and 'valor' in df.columns:
+            df.rename(columns={'cpf': 'cpf', 'valor': 'valor'}, inplace=True)
 
-        # Manter apenas as colunas relevantes
-        df = df[['CPF', 'Valor']]
+            st.write("---")
+            st.subheader("Preencha os campos abaixo:")
+            ano_referencia = st.text_input("Ano de Referência", value=str(datetime.now().year))
+            cpf_responsavel = st.text_input("CPF do Responsável")
+            txt_processo = st.text_input("Texto do Processo")
+            txt_obser = "RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE MARÇO DE 2024"
 
-        st.write("---")
-        st.subheader("Preencha os campos abaixo:")
-        ano_referencia = st.text_input("Ano de Referência", value=str(datetime.now().year))
-        cpf_responsavel = st.text_input("CPF do Responsável")
-        txt_processo = st.text_input("Texto do Processo")
-        txt_obser = "RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE MARÇO DE 2024"
-
-        if st.button("Gerar XML"):
-            generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser)
-            st.success("XMLs gerados com sucesso!")
+            if st.button("Gerar XML"):
+                generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser)
+                st.success("XMLs gerados com sucesso!")
+        else:
+            st.error("As colunas 'cpf' e 'valor' não foram encontradas no arquivo fornecido.")
 
 if __name__ == "__main__":
     main()
