@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import io
 
 xml_counter = 1  # Definir xml_counter globalmente
 
@@ -16,6 +17,8 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
 
     dt_emis = datetime.now().strftime('%Y-%m-%d')
     dt_ateste = datetime.now().strftime('%Y-%m-%d')
+
+    xml_files = []
 
     for cpf, valor in aggregated_data.items():
         cpf_list.append(cpf)
@@ -68,15 +71,13 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
   </sb:trailler>
 </sb:arquivo>"""
 
-            with open(f'XML_{xml_counter}.xml', 'w') as f:
-                f.write(xml_content)
-
+            xml_files.append(xml_content)
             xml_counter += 1
             cpf_list = []
 
-def main():
-    global xml_counter  # Declarar xml_counter como global para poder modificá-lo
+    return xml_files
 
+def main():
     st.title('App de Geração de XML')
 
     uploaded_file = st.file_uploader("Faça upload de uma planilha Excel", type=['xlsx'])
@@ -95,15 +96,16 @@ def main():
 
         if st.button("Gerar XML"):
             if not df.empty:
-                generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser)
+                xml_files = generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser)
                 st.success("XMLs gerados com sucesso!")
 
-                # Exibir links para download dos XMLs gerados
+                # Exibir botões de download para os XMLs gerados
                 st.write("---")
                 st.subheader("Baixar XMLs Gerados:")
-                for i in range(1, xml_counter):
-                    xml_filename = f'XML_{i}.xml'
-                    st.markdown(f"[Baixar {xml_filename}](./{xml_filename})")
+                for i, xml_content in enumerate(xml_files):
+                    xml_filename = f'XML_{i+1}.xml'
+                    xml_io = io.BytesIO(str.encode(xml_content))
+                    st.download_button(label=f'Baixar {xml_filename}', data=xml_io, file_name=xml_filename)
             else:
                 st.error("O arquivo Excel está vazio. Por favor, faça upload de um arquivo com dados.")
                 
