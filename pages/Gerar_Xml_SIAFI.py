@@ -92,6 +92,13 @@ def main():
             if not df.empty:
                 generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser)
                 st.success("XMLs gerados com sucesso!")
+
+                # Exibir links para download dos XMLs gerados
+                st.write("---")
+                st.subheader("Baixar XMLs Gerados:")
+                for i in range(1, xml_counter):
+                    xml_filename = f'XML_{i}.xml'
+                    st.markdown(f"[Baixar {xml_filename}](./{xml_filename})")
             else:
                 st.error("O arquivo Excel está vazio. Por favor, faça upload de um arquivo com dados.")
                 
