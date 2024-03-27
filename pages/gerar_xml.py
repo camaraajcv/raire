@@ -1,2 +1,4 @@
+import streamlit as st
+
 camara='alo'
-print(camara)
+st.write(camara)
