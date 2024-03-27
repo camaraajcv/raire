@@ -17,6 +17,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
 
     dt_emis = datetime.now().strftime('%Y-%m-%d')
     dt_ateste = datetime.now().strftime('%Y-%m-%d')
+    dt_ger = datetime.now().strftime('%d/%m/%Y')
 
     xml_files = []
 
@@ -28,7 +29,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
 <sb:arquivo xmlns:sb="http://www.tesouro.gov.br/siafi/submissao">
   <sb:header>
     <sb:codigoLayout>DH001</sb:codigoLayout>
-    <sb:dataGeracao>{dt_emis}</sb:dataGeracao>
+    <sb:dataGeracao>{dt_ger}</sb:dataGeracao>
     <sb:sequencialGeracao>{xml_counter}</sb:sequencialGeracao>
     <sb:anoReferencia>{ano_referencia}</sb:anoReferencia>
     <sb:ugResponsavel>120093</sb:ugResponsavel>
