@@ -77,10 +77,7 @@ def main():
     uploaded_file = st.file_uploader("Faça upload de uma planilha Excel", type=['xlsx'])
 
     if uploaded_file is not None:
-        df = pd.DataFrame(columns=['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano'])  # Criar um DataFrame com as colunas especificadas
-
-        excel_df = pd.read_excel(uploaded_file)  # Ler os dados do Excel
-        df = pd.concat([df, excel_df[['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano']]])  # Adicionar os dados relevantes do Excel ao DataFrame
+        df = pd.read_excel(uploaded_file, names=['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano'])  # Definir nomes das colunas explicitamente
 
         st.write(df)
 
