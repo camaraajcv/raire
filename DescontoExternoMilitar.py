@@ -1,14 +1,21 @@
 import streamlit as st
 from datetime import datetime, date, timedelta
 import folium
+from streamlit.script_request_queue import RerunData
+from streamlit.script_runner import RerunException
 # Título na barra lateral
 st.sidebar.title('Navegação')
-
+def run_another_script(script_path):
+    """
+    Runs the specified script.
+    """
+    # Guarda o estado atual da página para que possa ser restaurado após a execução do script.
+    st.script_request_queue_get().rerun(
+        RerunData(script_path, RerunData.RerunType.SCRIPT)
+    )
 # Link para outra página
 if st.sidebar.button('Ir para Outra Página'):
-    # Redirecionar para a outra página (abre um novo link)
-    # Aqui você precisa colocar o caminho correto para o seu arquivo outra_pagina.py
-    st.sidebar.markdown("[Link para Outra Página](gerar_xml.py)")
+    run_another_script('gerar_xml.py')
 # URL da imagem
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
