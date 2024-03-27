@@ -112,7 +112,8 @@ def main():
 
         st.write("---")
         total_value = df['valor'].sum()
-        st.success(f"Total: {format_currency(total_value)}")  # Mostrar a soma total da coluna 'valor' formatada
+        valor_raire_formatado = "{:,.2f}".format(total_value).replace(",", "-").replace(".", ",").replace("-", ".")
+        st.success(f"Total: {valor_raire_formatado}")  # Mostrar a soma total da coluna 'valor' formatada
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
