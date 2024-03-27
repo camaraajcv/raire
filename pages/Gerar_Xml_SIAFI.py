@@ -2,13 +2,16 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
+xml_counter = 1  # Definir xml_counter globalmente
+
 def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
+    global xml_counter  # Declarar xml_counter como global para poder modificá-lo
+
     df['cpf'] = df['cpf'].astype(str).str.zfill(11)
     df['valor'] = df['valor'].round(2)
     aggregated_data = df.groupby('cpf')['valor'].sum()
 
     numSeqItem_counter = 1
-    xml_counter = 1
     cpf_list = []
 
     dt_emis = datetime.now().strftime('%Y-%m-%d')
@@ -72,6 +75,8 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
             cpf_list = []
 
 def main():
+    global xml_counter  # Declarar xml_counter como global para poder modificá-lo
+
     st.title('App de Geração de XML')
 
     uploaded_file = st.file_uploader("Faça upload de uma planilha Excel", type=['xlsx'])
