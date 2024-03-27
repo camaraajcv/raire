@@ -77,6 +77,10 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
 
     return xml_files
 
+def format_currency(value):
+    # Formata o valor como moeda local
+    return "${:,.2f}".format(value)
+
 def main():
     st.title('App de Geração de XML')
 
@@ -92,7 +96,8 @@ def main():
         st.write(df)
 
         st.write("---")
-        st.success(f"Total: $ {df['valor'].sum():,.2f}")  # Mostrar a soma total da coluna 'valor' formatada
+        total_value = df['valor'].sum()
+        st.write(f"Total: {format_currency(total_value)}")  # Mostrar a soma total da coluna 'valor' formatada
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
