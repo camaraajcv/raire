@@ -107,13 +107,14 @@ def main():
         # Formatando as colunas
         df['saram'] = df['saram'].astype(str)
         df['cpf'] = df['cpf'].astype(str).str.zfill(11)
+        df['valor']= "{:,.2f}".format(df['valor']).replace(",", "-").replace(".", ",").replace("-", ".")
         mes_ano = df['mes_ano'].iloc[0]
         st.write(df)
 
         st.write("---")
         total_value = df['valor'].sum()
         valor_raire_formatado = "{:,.2f}".format(total_value).replace(",", "-").replace(".", ",").replace("-", ".")
-        st.success(f"Total: {valor_raire_formatado}")  # Mostrar a soma total da coluna 'valor' formatada
+        st.success(f"Total:$ {valor_raire_formatado}")  # Mostrar a soma total da coluna 'valor' formatada
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
