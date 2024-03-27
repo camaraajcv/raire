@@ -5,12 +5,6 @@ import folium
 import streamlit as st
 import subprocess
 
-# Função para executar outro script
-def run_another_script(script_path):
-    """
-    Runs the specified script.
-    """
-    subprocess.Popen(["streamlit", "run", script_path])
 
 # Título na barra lateral
 st.sidebar.title('Navegação')
