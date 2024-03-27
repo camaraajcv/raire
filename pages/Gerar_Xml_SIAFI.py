@@ -15,7 +15,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
     numSeqItem_counter = 1
     cpf_list = []
 
-    dt_emis = datetime.now().strftime('%Y-%m-%d')
+    dt_emis = datetime.now().strftime('%d/%m/%Y')
     dt_ateste = datetime.now().strftime('%Y-%m-%d')
 
     xml_files = []
@@ -41,7 +41,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
         <anoDH>{ano_referencia}</anoDH>
         <codTipoDH>RC</codTipoDH>
         <dadosBasicos>
-          <dtEmis>{dt_emis}</dtEmis>
+          <dtEmis>{dt_ateste}</dtEmis>
           <codUgPgto>120093</codUgPgto>
           <vlr>{total}</vlr>
           <txtObser>{txt_obser}</txtObser>
@@ -91,8 +91,8 @@ def main():
         st.subheader("Preencha os campos abaixo:")
         ano_referencia = st.text_input("Ano de Referência", value=str(datetime.now().year))
         cpf_responsavel = st.text_input("CPF do Responsável")
-        txt_processo = st.text_input("Texto do Processo")
-        txt_obser = "RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE MARÇO DE 2024"
+        txt_processo = st.text_input("Número do Processo")
+        txt_obser = st.text_input("Observação", value="RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE    DE 2024")
 
         if st.button("Gerar XML"):
             if not df.empty:
