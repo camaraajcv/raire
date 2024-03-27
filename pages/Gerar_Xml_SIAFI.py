@@ -95,7 +95,7 @@ def main():
         # Formatando as colunas
         df['saram'] = df['saram'].astype(str)
         df['cpf'] = df['cpf'].astype(str).str.zfill(11)
-
+        mes_ano = df['mes_ano'].iloc[0]
         st.write(df)
 
         st.write("---")
@@ -107,7 +107,7 @@ def main():
         ano_referencia = st.text_input("Ano de Referência", value=str(datetime.now().year))
         cpf_responsavel = st.text_input("CPF do Responsável")
         txt_processo = st.text_input("Número do Processo")
-        txt_obser = st.text_input("Observação", value="RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE MARÇO DE 2024")
+        txt_obser = st.text_input("Observação", value=f"RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS {mes_ano}")
 
         if st.button("Gerar XML"):
             if not df.empty:
