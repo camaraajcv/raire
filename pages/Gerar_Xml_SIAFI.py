@@ -77,25 +77,26 @@ def main():
     uploaded_file = st.file_uploader("Faça upload de uma planilha Excel", type=['xlsx'])
 
     if uploaded_file is not None:
-        df = pd.read_excel(uploaded_file)
+        df = pd.DataFrame(columns=['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano'])  # Criar um DataFrame com as colunas especificadas
+
+        excel_df = pd.read_excel(uploaded_file)  # Ler os dados do Excel
+        df = df.append(excel_df[['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano']])  # Adicionar os dados relevantes do Excel ao DataFrame
+
         st.write(df)
 
-        # Verificar se as colunas originais existem antes de renomeá-las
-        if 'cpf' in df.columns and 'valor' in df.columns:
-            df.rename(columns={'cpf': 'cpf', 'valor': 'valor'}, inplace=True)
+        st.write("---")
+        st.subheader("Preencha os campos abaixo:")
+        ano_referencia = st.text_input("Ano de Referência", value=str(datetime.now().year))
+        cpf_responsavel = st.text_input("CPF do Responsável")
+        txt_processo = st.text_input("Texto do Processo")
+        txt_obser = "RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE MARÇO DE 2024"
 
-            st.write("---")
-            st.subheader("Preencha os campos abaixo:")
-            ano_referencia = st.text_input("Ano de Referência", value=str(datetime.now().year))
-            cpf_responsavel = st.text_input("CPF do Responsável")
-            txt_processo = st.text_input("Texto do Processo")
-            txt_obser = "RELATÓRIO DOS MILITARES EM MISSÃO NO EXTERIOR - MÊS DE MARÇO DE 2024"
-
-            if st.button("Gerar XML"):
+        if st.button("Gerar XML"):
+            if not df.empty:
                 generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser)
                 st.success("XMLs gerados com sucesso!")
-        else:
-            st.error("As colunas 'cpf' e 'valor' não foram encontradas no arquivo fornecido.")
-
+            else:
+                st.error("O arquivo Excel está vazio. Por favor, faça upload de um arquivo com dados.")
+                
 if __name__ == "__main__":
     main()
