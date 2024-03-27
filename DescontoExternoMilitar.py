@@ -1,18 +1,20 @@
 import streamlit as st
 from datetime import datetime, date, timedelta
 import folium
-from streamlit.script_request_queue import RerunData
-from streamlit.script_runner import RerunException
-# Título na barra lateral
-st.sidebar.title('Navegação')
+
+# Função para executar outro script
 def run_another_script(script_path):
     """
     Runs the specified script.
     """
-    # Guarda o estado atual da página para que possa ser restaurado após a execução do script.
-    st.script_request_queue_get().rerun(
-        RerunData(script_path, RerunData.RerunType.SCRIPT)
-    )
+    # Obtém o estado atual do Streamlit
+    session_state = st.report_thread.get_report_ctx().session
+    # Atualiza o estado com o caminho do novo script a ser executado
+    session_state.request_queue.enqueue(script_path)
+
+# Título na barra lateral
+st.sidebar.title('Navegação')
+
 # Link para outra página
 if st.sidebar.button('Ir para Outra Página'):
     run_another_script('gerar_xml.py')

@@ -7,5 +7,3 @@ PyMuPDF
 folium
 geopy
 streamlit_folium
-RerunData
-RerunException
