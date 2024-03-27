@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import io
+import locale
 
 xml_counter = 1  # Definir xml_counter globalmente
 
@@ -9,13 +10,13 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
     global xml_counter  # Declarar xml_counter como global para poder modificá-lo
 
     df['cpf'] = df['cpf'].astype(str).str.zfill(11)
-    df['valor'] = df['valor'].round(2)
+    df['valor'] = df['valor'].astype(float)
     aggregated_data = df.groupby('cpf')['valor'].sum()
 
     numSeqItem_counter = 1
     cpf_list = []
 
-    dt_emis = datetime.now().strftime('%d/%m/%Y')
+    dt_emis = datetime.now().strftime('%Y-%m-%d')
     dt_ateste = datetime.now().strftime('%Y-%m-%d')
 
     xml_files = []
@@ -41,7 +42,7 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
         <anoDH>{ano_referencia}</anoDH>
         <codTipoDH>RC</codTipoDH>
         <dadosBasicos>
-          <dtEmis>{dt_ateste}</dtEmis>
+          <dtEmis>{dt_emis}</dtEmis>
           <codUgPgto>120093</codUgPgto>
           <vlr>{total}</vlr>
           <txtObser>{txt_obser}</txtObser>
@@ -88,12 +89,12 @@ def main():
         # Formatando as colunas
         df['saram'] = df['saram'].astype(str)
         df['cpf'] = df['cpf'].astype(str).str.zfill(11)
-        df['valor'] = df['valor'].astype(float).map("${:,.2f}".format)
+        df['valor'] = df['valor'].astype(float).map(locale.currency)
 
         st.write(df)
 
         st.write("---")
-        st.write(f"Total: {df['valor'].sum()}")  # Mostrar a soma total da coluna 'valor' formatada
+        st.write(f"Total: {locale.currency(df['valor'].sum(), grouping=True)}")  # Mostrar a soma total da coluna 'valor' formatada
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
