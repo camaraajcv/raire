@@ -87,7 +87,10 @@ def main():
     uploaded_file = st.file_uploader("Faça upload de uma planilha Excel", type=['xlsx'])
 
     if uploaded_file is not None:
-        df = pd.read_excel(uploaded_file, names=['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano'])  # Definir nomes das colunas explicitamente
+        df = pd.read_excel(uploaded_file, header=None)  # Não considerar a primeira linha como cabeçalho
+
+        # Definir os nomes das colunas explicitamente
+        df.columns = ['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano']
 
         # Formatando as colunas
         df['saram'] = df['saram'].astype(str)
