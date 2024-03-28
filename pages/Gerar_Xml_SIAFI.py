@@ -2,28 +2,25 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import io
- #URL da imagem
+
 image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
 
-#Código HTML e CSS para ajustar a largura da imagem para 20% da largura da coluna e centralizar
 html_code = f'<div style="display: flex; justify-content: center;"><img src="{image_url}" alt="Imagem" style="width:8vw;"/></div>'
-# Exibir a imagem usando HTML
 st.markdown(html_code, unsafe_allow_html=True)
 
-# Centralizar o texto abaixo da imagem
 st.markdown("<h1 style='text-align: center; font-size: 1.5em;'>DIRETORIA DE ADMINISTRAÇÃO DA AERONÁUTICA</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center; font-size: 1.2em;'>SUBDIRETORIA DE PAGAMENTO DE PESSOAL</h2>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; font-size: 1em; text-decoration: underline;'>PP2 - DIVISÃO DE PAGAMENTO DE PESSOAL NO EXTERIOR</h3>", unsafe_allow_html=True)
-xml_counter = 1  # Definir xml_counter globalmente
+
+xml_counter = 1  
 
 def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
-    global xml_counter  # Declarar xml_counter como global para poder modificá-lo
+    global xml_counter  
 
     df['cpf'] = df['cpf'].astype(str).str.zfill(11)
     df['valor'] = df['valor'].astype(float)
     aggregated_data = df.groupby('cpf')['valor'].sum()
 
-    numSeqItem_counter = 1
     cpf_list = []
 
     dt_emis = datetime.now().strftime('%Y-%m-%d')
@@ -34,6 +31,8 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
 
     for cpf, valor in aggregated_data.items():
         cpf_list.append(cpf)
+        numSeqItem_counter = 1  # Reinicializa o contador a cada novo CPF
+
         if len(cpf_list) == 100 or cpf == aggregated_data.index[-1]:
             total = sum(aggregated_data[cpf] for cpf in cpf_list).round(2)
             xml_content = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -84,13 +83,12 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
 </sb:arquivo>"""
 
             xml_files.append(xml_content)
-            xml_counter += 1
+            xml_counter += 1  # Incrementa o contador para o próximo XML
             cpf_list = []
 
     return xml_files
 
 def format_currency(value):
-    # Formata o valor como moeda local
     return "${:,.2f}".format(value)
 
 def main():
@@ -99,21 +97,20 @@ def main():
     uploaded_file = st.file_uploader("Faça upload de uma planilha Excel", type=['xlsx'])
 
     if uploaded_file is not None:
-        df = pd.read_excel(uploaded_file, header=None)  # Não considerar a primeira linha como cabeçalho
+        df = pd.read_excel(uploaded_file, header=None)  
 
-        # Definir os nomes das colunas explicitamente
         df.columns = ['saram', 'cpf', 'posto', 'nome', 'valor', 'mes_ano']
 
-        # Formatando as colunas
         df['saram'] = df['saram'].astype(str)
         df['cpf'] = df['cpf'].astype(str).str.zfill(11)
         mes_ano = df['mes_ano'].iloc[0]
+
         st.write(df)
 
         st.write("---")
         total_value = df['valor'].sum()
         valor_raire_formatado = "{:,.2f}".format(total_value).replace(",", "-").replace(".", ",").replace("-", ".")
-        st.success(f"Total:$ {valor_raire_formatado}")  # Mostrar a soma total da coluna 'valor' formatada
+        st.success(f"Total:$ {valor_raire_formatado}")
 
         st.write("---")
         st.subheader("Preencha os campos abaixo:")
@@ -127,7 +124,6 @@ def main():
                 xml_files = generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser)
                 st.success("XMLs gerados com sucesso!")
 
-                # Exibir botões de download para os XMLs gerados
                 st.write("---")
                 st.subheader("Baixar XMLs Gerados:")
                 for i, xml_content in enumerate(xml_files):
