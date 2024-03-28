@@ -31,9 +31,9 @@ def generate_xml(df, ano_referencia, cpf_responsavel, txt_processo, txt_obser):
 
     for cpf, valor in aggregated_data.items():
         cpf_list.append(cpf)
-        numSeqItem_counter = 1  # Reinicializa o contador a cada novo CPF
 
         if len(cpf_list) == 100 or cpf == aggregated_data.index[-1]:
+            numSeqItem_counter = 1  # Reinicializa o contador a cada novo XML gerado
             total = sum(aggregated_data[cpf] for cpf in cpf_list).round(2)
             xml_content = f"""<?xml version="1.0" encoding="UTF-8"?>
 <sb:arquivo xmlns:sb="http://www.tesouro.gov.br/siafi/submissao">
