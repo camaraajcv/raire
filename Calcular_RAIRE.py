@@ -8,7 +8,7 @@ import subprocess
 # Conteúdo da página principal
 st.title('Cálculo RAIRE')
 # URL da imagem
-image_url = "https://www.fab.mil.br/om/logo/mini/dirad2.jpg"
+image_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLFPxWi5v7QJCZRHsaH5BX4iZYkeFfkIMpEw&s"
 
 #Código HTML e CSS para ajustar a largura da imagem para 20% da largura da coluna e centralizar
 html_code = f'<div style="display: flex; justify-content: center;"><img src="{image_url}" alt="Imagem" style="width:8vw;"/></div>'
